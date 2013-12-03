@@ -1,7 +1,7 @@
 {
     "db": "mongodb://localhost/travelparrot",
     "app": {
-        "name": "MEAN - A Modern Stack - Production"
+        "name": "Travel Parrot - Production"
     },
     "facebook": {
         "clientID": "APP_ID",
