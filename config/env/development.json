@@ -1,26 +1,26 @@
 {
-    "db": "mongodb://localhost/mean-dev",
+    "db": "mongodb://localhost/travelparrot-dev",
     "app": {
-        "name": "MEAN - A Modern Stack - Development"
+        "name": "MEAN - A Modern Stack - Production"
     },
     "facebook": {
-        "clientID": "264446940369075",
-        "clientSecret": "ba9db8906165a93730c1703ac2295cdc",
+        "clientID": "APP_ID",
+        "clientSecret": "APP_SECRET",
         "callbackURL": "http://localhost:3000/auth/facebook/callback"
     },
     "twitter": {
-        "clientID": "1FaxKfeFn9hiRSqD3gxA",
-        "clientSecret": "hKWm0KfvM1JAeBv2XkB3EsNbw9mcMOONg0wcLowKE",
+        "clientID": "CONSUMER_KEY",
+        "clientSecret": "CONSUMER_SECRET",
         "callbackURL": "http://localhost:3000/auth/twitter/callback"
     },
     "github": {
-        "clientID": "c8d5f705973d41f8fa6e",
-        "clientSecret": "40960481125fe3d74eb33c776027f8ec655ea795",
+        "clientID": "APP_ID",
+        "clientSecret": "APP_SECRET",
         "callbackURL": "http://localhost:3000/auth/github/callback"
     },
     "google": {
-        "clientID": "532578338344.apps.googleusercontent.com",
-        "clientSecret": "Li31tmaIFlF-Kopsn2rC4Huq",
+        "clientID": "APP_ID",
+        "clientSecret": "APP_SECRET",
         "callbackURL": "http://localhost:3000/auth/google/callback"
     }
 }
