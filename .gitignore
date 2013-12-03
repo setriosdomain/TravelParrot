@@ -3,4 +3,4 @@
 .sass-cache/
 node_modules/
 public/lib
-config/env
+config/env/
