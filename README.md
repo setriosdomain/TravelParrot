@@ -4,9 +4,7 @@ TravelParrot
 
 Travel Parrot website.
 
-## Credits
-
-based on:
+## Credits based on:
 * MEAN Stack: https://github.com/linnovate/mean
 * template based on: http://jobpixels.com/bootbusiness/index.html
 
