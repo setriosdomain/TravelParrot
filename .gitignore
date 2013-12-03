@@ -3,3 +3,5 @@
 .sass-cache/
 node_modules/
 public/lib
+config/env/development.json
+config/env/production.json
