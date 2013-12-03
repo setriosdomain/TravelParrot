@@ -3,7 +3,7 @@
     "description": "TravelParrot website",
     "version": "0.1.0",
     "private": false,
-    "author": "Amos Haviv",
+    "author": "Nicolas Larrea",
     "repository": {
         "type": "git",
         "url": "https://github.com/setriosdomain/TravelParrot"
