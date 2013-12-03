@@ -1,0 +1,10 @@
+<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+	<span>{{article.created | date:'medium'}}</span> /
+	<span>{{article.user.name}}</span>
+	<h2>{{article.title}}
+        <a data-ng-show="global.user._id == article.user._id" href="/#!/articles/{{article._id}}/edit">edit</a>
+        <a data-ng-show="global.user._id == article.user._id" href="/#!/articles/{{article._id}}/delete">delete</a>
+    </h2>
+    <img  width="630" height="300" ng-src="/uploads/{{article.file_url}}">
+	<div>{{article.content}}</div>
+</section>

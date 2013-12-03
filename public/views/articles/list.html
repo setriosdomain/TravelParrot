@@ -1,0 +1,25 @@
+<section data-ng-controller="ArticlesController" data-ng-init="find()">
+	<ul class="articles unstyled">
+        <li data-ng-repeat="article in articles | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
+			<span>{{article.created | date:'medium'}}</span> /
+			<span>{{article.user.name}}</span>
+			<h2><a data-ng-href="#!/articles/{{article._id}}">{{article.title}}</a></h2>
+            <img  width="630" height="300" ng-src="/uploads/{{article.file_url}}">
+			<div>{{article.content}}</div>
+		</li>
+	</ul>
+	<h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a href="/#!/articles/create">Create One</a>?</h1>
+
+
+
+    <div data-ng-show="!articles || articles.length > 10" class="well well-small">
+        <pagination total-items="confPagination.totalItems"
+                    page="confPagination.currentPage"
+                    max-size="confPagination.maxSize"
+                    class="pagination"
+                    boundary-links= confPagination.boundaryLinks>
+        </pagination>
+    </div>
+
+
+</section>
