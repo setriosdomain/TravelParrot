@@ -5,8 +5,9 @@ TravelParrot
 Travel Parrot website.
 
 ## Credits
-based on MEAN Stack: https://github.com/linnovate/mean
-css based on: http://jobpixels.com/bootbusiness/index.html
+based on:
+* MEAN Stack: https://github.com/linnovate/mean
+* template based on: http://jobpixels.com/bootbusiness/index.html
 
 ## Prerequisites
 * Node.js - Download and Install [Node.js](http://www.nodejs.org/download/). You can also follow [this gist](https://gist.github.com/isaacs/579814) for a quick and easy way to install Node.js and npm
