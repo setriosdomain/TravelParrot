@@ -3,7 +3,7 @@
     "description": "TravelParrot website",
     "version": "0.1.0",
     "private": false,
-    "author": "Nicolas Larrea",
+    "author": "SetrioThor",
     "repository": {
         "type": "git",
         "url": "https://github.com/setriosdomain/TravelParrot"
@@ -40,8 +40,7 @@
         "grunt-cli": "latest",
         "grunt-env": "latest",
         "mocha": "latest",
-        "multiparty": "latest",
-        "mkdirp": "latest"
+        "multiparty": "latest"
     },
     "devDependencies": {
         "supertest": "latest",
