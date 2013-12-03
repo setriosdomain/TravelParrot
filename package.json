@@ -40,7 +40,8 @@
         "grunt-cli": "latest",
         "grunt-env": "latest",
         "mocha": "latest",
-        "multiparty": "latest"
+        "multiparty": "latest",
+        "mkdirp": "latest"
     },
     "devDependencies": {
         "supertest": "latest",

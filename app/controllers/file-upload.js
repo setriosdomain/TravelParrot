@@ -19,15 +19,32 @@ exports.serverFileUpload = function(req, res) {
                 var file = files.file[i];
 
                 fs.readFile(file.path, function (err, data) {
+                    var uploadPath = __dirname + "/../../public/uploads/";
 
-                    var newPath = __dirname + "/../../public/uploads/" + path.basename(file.path);
-                    fs.writeFile(newPath, data, function (err) {
-                        //res.redirect('/');
-                        res.writeHead(200, {'content-type': 'text/plain'});
-                        //res.write('received upload:\n\n' + path.basename(file.path));
-                        res.end(path.basename(file.path));
-                        //console.log('file uploaded to: '+ newPath);
+                    var writeToUploadDir = function(filePath){
+                        var newPath = uploadPath + path.basename(filePath);
+                        fs.writeFile(newPath, data, function (err) {
+                            //res.redirect('/');
+                            res.writeHead(200, {'content-type': 'text/plain'});
+                            //res.write('received upload:\n\n' + path.basename(file.path));
+                            res.end(path.basename(filePath));
+                            //console.log('file uploaded to: '+ newPath);
+                        });
+                    };
+
+                    path.exists(uploadPath, function(exists) {
+                    if(!exists){
+                          var mkdirp = require('mkdirp');
+                          mkdirp(uploadPath, function(err) {
+                              // path was created unless there was error
+                              writeToUploadDir(file.path);
+
+                          });
+                    } else{ writeToUploadDir(file.path);}
+
+
                     });
+
                 });
             }
 
