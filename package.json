@@ -1,6 +1,6 @@
 {
     "name": "mean",
-    "description": "TravelParrot website",
+    "description": "TravelParrot website based on MEAN stack",
     "version": "0.0.1",
     "private": false,
     "author": "SetrioThor",
