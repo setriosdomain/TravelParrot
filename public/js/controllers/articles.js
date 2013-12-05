@@ -82,6 +82,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
             articleId: $routeParams.articleId
         }, function(article) {
             $scope.article = article;
+            $scope.file_url = article.file_url;
         });
     };
 
@@ -113,19 +114,11 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
                     if(!data.data){return;}
                     //console.log('file uploaded: ' + data.data);
                     $scope.file_url = data.data;
-                    if($scope.article != null){
-                        //if updating
-                        $scope.article.file_url = data.data;
-                    }
                 });
         }
     };
     //end file upload
     $scope.clearImage = function(){
         $scope.file_url = '';
-        if($scope.article != null){
-            $scope.article.file_url = '';
-        }
-
     };
 }]);
