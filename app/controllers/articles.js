@@ -64,6 +64,19 @@ exports.destroy = function(req, res) {
                 status: 500
             });
         } else {
+
+            //delete file logic
+            var fs = require('fs');
+            var articleImg = __dirname + "/../../public/uploads/" + article.file_url;
+            if(fs.existsSync(articleImg)){
+                fs.unlink(articleImg, function (err) {
+                    if (err) throw err;
+                    console.log('deleted article file: ' + articleImg);
+                });
+            }
+            //delete file logic
+
+
             res.jsonp(article);
         }
     });

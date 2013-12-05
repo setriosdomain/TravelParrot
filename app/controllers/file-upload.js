@@ -1,7 +1,6 @@
 var multiparty = require('multiparty')
     , fs = require('fs')
-    , path = require('path')
-    , util = require('util')
+    , path = require('path');
 
 /**
  * Create a article
@@ -24,11 +23,19 @@ exports.serverFileUpload = function(req, res) {
                     var writeToUploadDir = function(filePath){
                         var newPath = uploadPath + path.basename(filePath);
                         fs.writeFile(newPath, data, function (err) {
+                            if (err) throw err;
                             //res.redirect('/');
                             res.writeHead(200, {'content-type': 'text/plain'});
                             //res.write('received upload:\n\n' + path.basename(file.path));
                             res.end(path.basename(filePath));
                             //console.log('file uploaded to: '+ newPath);
+
+                            //delete tmp server file
+                            fs.unlink(filePath, function (err) {
+                                if (err) throw err;
+                                console.log('deleted' + filePath);
+                            });
+                            //delete tmp server file
                         });
                     };
 
@@ -36,6 +43,7 @@ exports.serverFileUpload = function(req, res) {
                     if(!exists){
                           var mkdirp = require('mkdirp');
                           mkdirp(uploadPath, function(err) {
+                              if (err) throw err;
                               // path was created unless there was error
                               writeToUploadDir(file.path);
 
