@@ -5,7 +5,7 @@
 module.exports = function(config) {
     config.set({
 
-        basePath: '/Users/nicolaslarrea/Developer/MEAN stack/mean-master',
+        basePath: '/Users/nicolaslarrea/Developer/MEAN stack/TravelParrotWSG/TravelParrot',
         frameworks: ['jasmine'],
         files: [
         'test/**/*.js'

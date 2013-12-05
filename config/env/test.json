@@ -1,5 +1,5 @@
 {
-    "db": "mongodb://localhost/travelparrot",
+    "db": "mongodb://localhost/travelparrot-test",
     "app": {
         "name": "Travel Parrot - Production"
     },
