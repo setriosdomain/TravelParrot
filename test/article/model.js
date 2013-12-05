@@ -1,69 +1,74 @@
-//unit tests might remove all articles/users from database if NODE_ENV is
-//not configured properly thus disable for now.
 
 
-///**
-// * Module dependencies.
-// */
-//var should = require('should'),
-//    app = require('../../server'),
-//    mongoose = require('mongoose'),
-//    User = mongoose.model('User'),
-//    Article = mongoose.model('Article');
-//
-////Globals
-//var user;
-//var article;
-//
-////The tests
-//describe('<Unit Test>', function() {
-//    describe('Model Article:', function() {
-//        beforeEach(function(done) {
-//            user = new User({
-//                name: 'Full name',
-//                email: 'test@test.com',
-//                username: 'user',
-//                password: 'password'
-//            });
-//
-//            user.save(function(err) {
-//                article = new Article({
-//                    title: 'Article Title',
-//                    content: 'Article Content',
-//                    user: user
-//                });
-//
-//                done();
-//            });
-//        });
-//
-//        describe('Method Save', function() {
-//            it('should be able to save without problems', function(done) {
-//                return article.save(function(err) {
-//                    should.not.exist(err);
-//                    done();
-//                });
-//            });
-//
-//            it('should be able to show an error when try to save witout title', function(done) {
-//                article.title = '';
-//
-//                return article.save(function(err) {
-//                    should.exist(err);
-//                    done();
-//                });
-//            });
-//        });
-//
-//        afterEach(function(done) {
-//            Article.remove({});
-//            User.remove({});
-//            done();
-//        });
-//        after(function(done){
-//            Article.remove().exec();
-//            User.remove().exec();
-//            done();
-//        });
-//    });
-//});
+function isUnitTestMode(){
+    return process.env.NODE_ENV == 'test';
+}
+/**
+* Module dependencies.
+*/
+var should = require('should'),
+    app = require('../../server'),
+    mongoose = require('mongoose'),
+    User = mongoose.model('User'),
+    Article = mongoose.model('Article');
+
+//Globals
+var user;
+var article;
+
+//The tests
+describe('<Unit Test>', function() {
+    describe('Model Article:', function() {
+        beforeEach(function(done) {
+            if(!app.isUnitTestMode()){return;}
+            user = new User({
+                name: 'Full name',
+                email: 'test@test.com',
+                username: 'user',
+                password: 'password'
+            });
+
+            user.save(function(err) {
+                article = new Article({
+                    title: 'Article Title',
+                    content: 'Article Content',
+                    user: user
+                });
+
+                done();
+            });
+        });
+
+        describe('Method Save', function() {
+            if(!app.isUnitTestMode()){return;}
+            it('should be able to save without problems', function(done) {
+                return article.save(function(err) {
+                    should.not.exist(err);
+                    done();
+                });
+            });
+
+            it('should be able to show an error when try to save witout title', function(done) {
+                article.title = '';
+
+                return article.save(function(err) {
+                    should.exist(err);
+                    done();
+                });
+            });
+        });
+
+        afterEach(function(done) {
+            if(!app.isUnitTestMode()){return;}
+            Article.remove({});
+            User.remove({});
+            done();
+        });
+        after(function(done){
+            if(!app.isUnitTestMode()){return;}
+            Article.remove().exec();
+            User.remove().exec();
+            done();
+        });
+    });
+});

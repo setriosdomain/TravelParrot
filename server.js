@@ -59,3 +59,8 @@ logger.init(app, passport, mongoose);
 
 //expose app
 exports = module.exports = app;
+
+
+app.isUnitTestMode = function(){
+    return process.env.NODE_ENV == 'test';
+}

@@ -1,9 +1,9 @@
 {
-    "name": "mean",
+    "name": "TravelParrot",
     "description": "TravelParrot website based on MEAN stack",
     "version": "0.0.1",
     "private": false,
-    "author": "SetrioThor",
+    "author": "",
     "repository": {
         "type": "git",
         "url": "https://github.com/setriosdomain/TravelParrot"
