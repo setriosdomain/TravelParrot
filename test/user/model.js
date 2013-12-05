@@ -1,5 +1,5 @@
 //unit tests might remove all articles/users from database if NODE_ENV is
-//not configured properlly thus disable for now.
+//not configured properly thus disable for now.
 
 ///**
 // * Module dependencies.
