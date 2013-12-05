@@ -121,4 +121,9 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
     $scope.clearImage = function(){
         $scope.file_url = '';
     };
+
+    $scope.showImage = function(article){
+        if(!article){return false;}
+        return article.file_url != '';
+    }
 }]);

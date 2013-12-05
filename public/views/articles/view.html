@@ -5,6 +5,6 @@
         <a data-ng-show="global.user._id == article.user._id" href="/#!/articles/{{article._id}}/edit">edit</a>
         <a data-ng-show="global.user._id == article.user._id" href="/#!/articles/{{article._id}}/delete">delete</a>
     </h2>
-    <img  width="630" height="300" ng-src="/uploads/{{article.file_url}}">
+    <img ng-show="showImage(article)" width="630" height="300" ng-src="/uploads/{{article.file_url}}">
 	<div>{{article.content}}</div>
 </section>

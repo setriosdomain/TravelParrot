@@ -4,7 +4,9 @@
 			<span>{{article.created | date:'medium'}}</span> /
 			<span>{{article.user.name}}</span>
 			<h2><a data-ng-href="#!/articles/{{article._id}}">{{article.title}}</a></h2>
-            <img  width="630" height="300" ng-src="/uploads/{{article.file_url}}">
+
+            <img ng-show="showImage(article)" width="630" height="300" ng-src="/uploads/{{article.file_url}}">
+
 			<div>{{article.content}}</div>
 		</li>
 	</ul>
