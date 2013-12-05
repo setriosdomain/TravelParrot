@@ -18,6 +18,13 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
     auth = require('./config/middlewares/authorization'),
     mongoose = require('mongoose');
 
+
+var should = require('should');
+should.exitNotInUnitTestMode = function (){
+        return process.env.NODE_ENV != 'test';
+};
+
+
 //Bootstrap db connection
 var db = mongoose.connect(config.db);
 
@@ -60,7 +67,3 @@ logger.init(app, passport, mongoose);
 //expose app
 exports = module.exports = app;
 
-
-app.isUnitTestMode = function(){
-    return process.env.NODE_ENV == 'test';
-}

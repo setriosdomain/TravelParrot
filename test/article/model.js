@@ -1,8 +1,6 @@
 
 
-function isUnitTestMode(){
-    return process.env.NODE_ENV == 'test';
-}
+
 /**
 * Module dependencies.
 */
@@ -12,6 +10,8 @@ var should = require('should'),
     User = mongoose.model('User'),
     Article = mongoose.model('Article');
 
+
+
 //Globals
 var user;
 var article;
@@ -20,7 +20,7 @@ var article;
 describe('<Unit Test>', function() {
     describe('Model Article:', function() {
         beforeEach(function(done) {
-            if(!app.isUnitTestMode()){return;}
+            if(should.exitNotInUnitTestMode()){return;}
             user = new User({
                 name: 'Full name',
                 email: 'test@test.com',
@@ -40,7 +40,7 @@ describe('<Unit Test>', function() {
         });
 
         describe('Method Save', function() {
-            if(!app.isUnitTestMode()){return;}
+            if(should.exitNotInUnitTestMode()){return;}
             it('should be able to save without problems', function(done) {
                 return article.save(function(err) {
                     should.not.exist(err);
@@ -59,13 +59,13 @@ describe('<Unit Test>', function() {
         });
 
         afterEach(function(done) {
-            if(!app.isUnitTestMode()){return;}
+            if(should.exitNotInUnitTestMode()){return;}
             Article.remove({});
             User.remove({});
             done();
         });
         after(function(done){
-            if(!app.isUnitTestMode()){return;}
+            if(should.exitNotInUnitTestMode()){return;}
             Article.remove().exec();
             User.remove().exec();
             done();

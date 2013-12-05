@@ -17,7 +17,7 @@ var user;
 describe('<Unit Test>', function() {
     describe('Model User:', function() {
         before(function(done) {
-            if(!app.isUnitTestMode()){return;}
+            if(should.exitNotInUnitTestMode()){return;}
             user = new User({
                 name: 'Full name',
                 email: 'test@test.com',
@@ -35,7 +35,7 @@ describe('<Unit Test>', function() {
         });
 
         describe('Method Save', function() {
-            if(!app.isUnitTestMode()){return;}
+            if(should.exitNotInUnitTestMode()){return;}
             it('should begin with no users', function(done) {
                 User.find({}, function(err, users) {
                     users.should.have.length(0);
@@ -75,7 +75,7 @@ describe('<Unit Test>', function() {
         });
 
         after(function(done) {
-            if(!app.isUnitTestMode()){return;}
+            if(should.exitNotInUnitTestMode()){return;}
             User.remove().exec();
             done();
         });
