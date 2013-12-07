@@ -4,7 +4,9 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     Article = mongoose.model('Article'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    fileUpload = require('./file-upload');
+
 
 
 /**
@@ -20,7 +22,7 @@ exports.article = function(req, res, next, id) {
 };
 
 /**
- * Create a article
+ * Create an article
  */
 exports.create = function(req, res) {
 
@@ -40,7 +42,7 @@ exports.create = function(req, res) {
 };
 
 /**
- * Update a article
+ * Update an article
  */
 exports.update = function(req, res) {
     var article = req.article;
@@ -65,17 +67,7 @@ exports.destroy = function(req, res) {
             });
         } else {
 
-            //delete file logic
-            var fs = require('fs');
-            var articleImg = __dirname + "/../../public/uploads/" + article.file_url;
-            if(fs.existsSync(articleImg)){
-                fs.unlink(articleImg, function (err) {
-                    if (err) throw err;
-                    console.log('deleted article file: ' + articleImg);
-                });
-            }
-            //delete file logic
-
+            fileUpload.deleteUploadedFile(article.file_url);
 
             res.jsonp(article);
         }

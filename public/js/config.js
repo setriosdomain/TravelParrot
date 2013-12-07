@@ -2,23 +2,28 @@
 window.app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
+        //articles
         when('/articles', {
-            templateUrl: 'views/articles/list.html'
+            templateUrl: 'views/articles/list.html',
+            controller: 'ArticlesController'
         }).
         when('/articles/create', {
-            templateUrl: 'views/articles/create.html'
+            templateUrl: 'views/articles/create.html',
+            controller: 'ArticlesController'
         }).
         when('/articles/:articleId/edit', {
-            templateUrl: 'views/articles/edit.html'
+            templateUrl: 'views/articles/edit.html',
+            controller: 'ArticlesController'
         }).
-        //__
         when('/articles/:articleId/delete', {
-                templateUrl: 'views/articles/delete.html'
+            templateUrl: 'views/articles/delete.html',
+            controller: 'ArticlesController'
         }).
-        //__
         when('/articles/:articleId', {
-            templateUrl: 'views/articles/view.html'
+            templateUrl: 'views/articles/view.html',
+            controller: 'ArticlesController'
         }).
+        //home
         when('/', {
             templateUrl: 'views/index.html'
         }).

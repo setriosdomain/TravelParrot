@@ -1,4 +1,4 @@
-<section data-ng-controller="ArticlesController" data-ng-init="find()">
+<section data-ng-init="find()">
 	<ul class="articles unstyled">
         <li data-ng-repeat="article in articles | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
 			<span>{{article.created | date:'medium'}}</span> /

@@ -3,7 +3,7 @@ var multiparty = require('multiparty')
     , path = require('path');
 
 /**
- * Create a article
+ * Server file upload.
  */
 exports.serverFileUpload = function(req, res) {
     if (req.url === '/upload' && req.method === 'POST') {
@@ -39,7 +39,7 @@ exports.serverFileUpload = function(req, res) {
                         });
                     };
 
-                    path.exists(uploadPath, function(exists) {
+                    fs.exists(uploadPath, function(exists) {
                     if(!exists){
                           var mkdirp = require('mkdirp');
                           mkdirp(uploadPath, function(err) {
@@ -61,4 +61,20 @@ exports.serverFileUpload = function(req, res) {
         return;
 
     }
+}
+
+/**
+ * Delete file from uploads folder.
+ * */
+exports.deleteUploadedFile = function(file_name){
+    if(file_name == ''){return;}
+    var fileToDelete = __dirname + "/../../public/uploads/" + file_name;
+    //fs.existsSync return true if its a file or directory :( need to improve this code.
+    if(fs.existsSync(fileToDelete)){
+        fs.unlink(fileToDelete, function (err) {
+            if (err) throw err;
+            console.log('deleted file from uploads: ' + fileToDelete);
+        });
+    }
+
 }
