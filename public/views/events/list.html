@@ -1,16 +1,37 @@
 <section data-ng-init="find()">
+
 	<ul class="events unstyled">
+        <div class="page-header">
+            <h2>Events</h2>
+        </div>
         <li data-ng-repeat="event in events | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
-			<span>{{event.created | date:'medium'}}</span> /
-			<span>{{event.user.name}}</span>
-			<h2><a data-ng-href="#!/events/{{event._id}}">{{event.title}}</a></h2>
 
-            <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
 
-			<div>{{article.content}}</div>
+
+            <div class="row bottom-space">
+                    <div class="span1">
+                       <div class="circle">
+                           <span class="event-date">{{event.created | date:'MMM'}}<br>{{event.created | date:'dd'}}</span>
+                       </div>
+                    </div>
+
+                    <div class="span9">
+                        <h4><a data-ng-href="#!/events/{{event._id}}">{{event.title}}</a></h4>
+
+
+
+                        <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
+                        <p>
+                            {{event.content}}
+                        </p>
+                        <span>By: {{event.user.name}}</span>
+                        <br>
+                        <span>{{event.created | date:'medium'}}</span>
+                    </div>
+            </div>
 		</li>
 	</ul>
-	<h1 data-ng-hide="!events || events.length">No articles yet. <br> Why don't you <a ng-href="/#!/events/create">Create One</a>?</h1>
+	<h1 data-ng-hide="!events || events.length">No events yet. <br> Why don't you <a ng-href="/#!/events/create">Create One</a>?</h1>
 
 
 

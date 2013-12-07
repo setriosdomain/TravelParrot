@@ -1,7 +1,10 @@
 <section data-ng-init="find()">
+    <div class="page-header">
+        <h2>Articles</h2>
+    </div>
 	<ul class="articles unstyled">
         <li data-ng-repeat="article in articles | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
-			<span>{{article.created | date:'medium'}}</span> /
+			<span>{{article.created | date:'medium'}}</span> &nbspBy:
 			<span>{{article.user.name}}</span>
 			<h2><a data-ng-href="#!/articles/{{article._id}}">{{article.title}}</a></h2>
 
