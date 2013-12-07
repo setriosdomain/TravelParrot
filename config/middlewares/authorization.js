@@ -31,3 +31,14 @@ exports.article = {
         next();
     }
 };
+/**
+ * Event authorizations routing middleware
+ */
+exports.event = {
+    hasAuthorization: function(req, res, next) {
+        if (req.event.user.id != req.user.id) {
+            return res.send(401, 'User is not authorized');
+        }
+        next();
+    }
+};

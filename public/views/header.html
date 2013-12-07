@@ -1,10 +1,15 @@
 <div class="navbar-inner" data-ng-controller="HeaderController">
     <ul class="nav">
         <li>
-            <a class="brand" href="/">MEAN - A Modern Stack</a>
+            <a class="brand" href="/">Travel Parrot</a>
         </li>
-        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-            <a href="#!/{{item.link}}">{{item.title}}</a>
+        <li class="dropdown" data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+            <a ng-href="#!/{{item.link}}" class="dropdown-toggle" data-toggle="dropdown">{{item.title}}<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li data-ng-repeat="subitem in item.submenu"  ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+                    <a ng-href="#!/{{subitem.link}}">{{subitem.title}}</a>
+                </li>
+            </ul>
         </li>
     </ul>
     <ul class="nav pull-right" data-ng-hide="global.authenticated">

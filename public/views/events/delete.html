@@ -1,0 +1,10 @@
+<section data-ng-init="findOne()">
+	<span>{{event.created | date:'medium'}}</span> /
+	<span>{{event.user.name}}</span>
+	<h2>{{event.title}}</h2>
+    <pre data-ng-show="global.user._id == event.user._id">Are you sure you want tp delete this event?</pre>
+    <button data-ng-show="global.user._id == event.user._id" ng-click="remove()" class="btn btn-primary">Yes</button>
+    <button data-ng-show="global.user._id == event.user._id" ng-click="eventsHome()" class="btn btn-primary">No</button>
+    <div class="row">&nbsp;</div>
+    <div>{{event.content}}</div>
+</section>

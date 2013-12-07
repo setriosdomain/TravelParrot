@@ -1,0 +1,10 @@
+<section data-ng-init="findOne()">
+	<span>{{event.created | date:'medium'}}</span> /
+	<span>{{event.user.name}}</span>
+	<h2>{{event.title}}
+        <a data-ng-show="global.user._id == event.user._id" ng-href="/#!/events/{{event._id}}/edit">edit</a>
+        <a data-ng-show="global.user._id == event.user._id" ng-href="/#!/events/{{event._id}}/delete">delete</a>
+    </h2>
+    <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
+	<div>{{event.content}}</div>
+</section>

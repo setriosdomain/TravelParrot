@@ -1,0 +1,41 @@
+<section data-ng-init="findOne()">
+    <!--file upload override style-->
+    <script type='text/javascript' src='/lib/fileUpload/bootstrap-filestyle.min.js'></script>
+    <!--file upload override style-->
+	<form class="form-horizontal" data-ng-submit="update()">
+        <div class="control-group controls">
+            <h3>Edit</h3>
+        </div>
+		<div class="control-group">
+			<label class="control-label" for="title">Title</label>
+			<div class="controls">
+				<input type="text" data-ng-model="event.title" id="title" class="field span9" placeholder="Title" required>
+				</input>
+			</div>
+		</div>
+        <!--start file-->
+        <div class="control-group">
+            <label class="control-label" for="image">Image</label>
+            <!--<div class="controls" ng-controller="FileUploadCtrl">-->
+            <div class="controls">
+                <img ng-show="file_url != ''" width="63" height="30" ng-src="/uploads/{{file_url}}">
+                <!--file input customized using bootstrap-filestyle.-->
+                <input ng-file-select="onFileSelect($files)" type="file" accept="image/*" class="filestyle" data-buttonText="Choose image" data-classButton="btn btn-primary" data-icon="false" data-input="false">
+                <button  type="button" ng-click="clearImage()" class="btn btn-primary">Clear</button>
+            </div>
+
+        </div>
+        <!--end file-->
+		<div class="control-group">
+			<label class="control-label" for="content">Content</label>
+
+			<div class="controls">
+				<textarea data-ng-model="event.content" id="content" class="field span9" cols="30" rows="15" placeholder="Content">
+				</textarea>
+			</div>
+		</div>
+		<div class="controls">
+            <button  type="submit" class="btn btn-primary">Update</button>
+		</div>
+	</form>
+</section>

@@ -75,6 +75,16 @@ module.exports = function(app, passport, auth) {
     var fileUpload = require('../app/controllers/file-upload');
     app.post('/upload', auth.requiresLogin, fileUpload.serverFileUpload);
 
+    //Event Routes
+    var events = require('../app/controllers/events');
+    app.get('/events', events.all);
+    app.post('/events', auth.requiresLogin, events.create);
+    app.get('/events/:eventId', events.show);
+    app.put('/events/:eventId', auth.requiresLogin, auth.event.hasAuthorization, events.update);
+    app.del('/events/:eventId', auth.requiresLogin, auth.event.hasAuthorization, events.destroy);
+    //Finish with setting up the articleId param
+    app.param('eventId', events.event);
+
     //Home route
     var index = require('../app/controllers/index');
     app.get('/', index.render);
