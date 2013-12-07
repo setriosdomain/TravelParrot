@@ -6,7 +6,7 @@
         <li class="dropdown" data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
             <a ng-href="#!/{{item.link}}" class="dropdown-toggle" data-toggle="dropdown">{{item.title}}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li data-ng-repeat="subitem in item.submenu"  ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+                <li data-ng-repeat="subitem in item.submenu">
                     <a ng-href="#!/{{subitem.link}}">{{subitem.title}}</a>
                 </li>
             </ul>
