@@ -28,6 +28,13 @@ var EventSchema = new Schema({
         default: '',
         trim: true
     },
+    periodFrom: Date,
+    periodTo: Date,
+    destinations:[{
+        place: String,
+        latitude: String,
+        longitude: String
+    }],
     user: {
         type: Schema.ObjectId,
         ref: 'User'
