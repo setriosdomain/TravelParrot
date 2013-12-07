@@ -4,7 +4,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
     $scope.menu = [
     {
         "title": "Articles",
-        "link": "",
+        "link": "articles",
         "submenu":     [
             {
                 "title": "List Articles",
@@ -18,7 +18,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
     },
     {
         "title": "Events",
-        "link": "",
+        "link": "events",
         "submenu": [
             {
                 "title": "List Events",
