@@ -302,20 +302,25 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         var data = event.destinations;
         newData = [];
 
-        var center = {lat:0,lng:0};
+        var markerBounds = new google.maps.LatLngBounds();
+        //var center = {lat:0,lng:0};
 
         for(var i = 0; i < data.length; i++) {
             var coord = {};
             coord.latLng = new google.maps.LatLng(data[i].lat, data[i].lng, false);
             $scope.GoogleMaps.createMarker(coord);
-            center.lat += data[i].lat;
-            center.lng += data[i].lng;
+            //center.lat += data[i].lat;
+            //center.lng += data[i].lng;
+            markerBounds.extend(coord.latLng);
         }
 
-        center.lat = center.lat/data.length;
-        center.lng = center.lng/data.length;
-        $scope.GoogleMaps.map.setCenter(new google.maps.LatLng(center.lat, center.lng));
-
+        //center.lat = center.lat/data.length;
+        //center.lng = center.lng/data.length;
+        //$scope.GoogleMaps.map.setCenter(new google.maps.LatLng(center.lat, center.lng));
+        $scope.GoogleMaps.map.panToBounds(markerBounds);
+        if($scope.GoogleMaps.map.getZoom() > 0.5){
+            $scope.GoogleMaps.map.setZoom($scope.GoogleMaps.map.getZoom() -0.5);
+        }
 
         return newData;
     }
