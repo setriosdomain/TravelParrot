@@ -153,7 +153,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
         //resizes map with a maxWidthand MaxHeight and keeping the center of tha map.
         google.maps.event.addDomListener(window, "resize", function() {
-            return;
+            //return;
             var center = $scope.GoogleMaps.map.getCenter();
             google.maps.event.trigger($scope.GoogleMaps.map, 'resize');
             var marginLeft = 40;
