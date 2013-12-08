@@ -184,12 +184,15 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
         $scope.GoogleMaps.geocoder.geocode(geocoderRequest, function(results, status){
             if (status == google.maps.GeocoderStatus.OK) {
-
+                var latLong = results[0].geometry.location;
+                var coord ={};
+                coord.latLng = latLong;
+                $scope.GoogleMaps.createMarker(coord);
                 // results is an array of GeocoderResult objects. Using only results[0] is sufficient
                 // check the documentation to see what a GeocoderResult object looks like:
                 // https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult
-                var latLong = results[0].geometry.location;
                 $scope.GoogleMaps.map.setCenter(latLong);
+                $scope.GoogleMaps.map.setZoom(15);
             }
         });
     }
@@ -264,7 +267,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
                     // https://developers.google.com/maps/documentation/javascript/reference#Map
                     var coords ={};
                     coords.latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude) ;
-
                     $scope.GoogleMaps.createMarker(coords);
                     map.setCenter(coords.latLng);
                     map.setZoom(15);
