@@ -45,9 +45,8 @@ window.app.config(['$routeProvider',
                 controller: 'EventsController'
         }).
         //home
-        when('/', {
-            templateUrl: 'views/index.html',
-            controller: 'IndexController'
+        when('/', {templateUrl: 'views/index.html',
+                   controller: 'IndexController'
         }).
         otherwise({
             redirectTo: '/'
