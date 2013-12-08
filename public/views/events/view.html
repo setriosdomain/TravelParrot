@@ -6,5 +6,12 @@
         <a data-ng-show="global.user._id == event.user._id" ng-href="/#!/events/{{event._id}}/delete">delete</a>
     </h2>
     <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
-	<div>{{event.content}}</div>
+	<div class="row">&nbsp</div>
+    <div>{{event.content}}</div>
+    <div class="row">&nbsp</div>
+
+    <!--google map placeholder-->
+    <div id="map_canvas" style="width: 630px; height: 300px;">
+        {{GoogleMaps.createMap()}}
+    </div>
 </section>

@@ -2,7 +2,7 @@
     <!--file upload override style-->
     <script type='text/javascript' src='/lib/fileUpload/bootstrap-filestyle.min.js'></script>
     <!--file upload override style-->
-	<form class="form-horizontal" data-ng-submit="update()">
+	<form class="form-horizontal">
         <div class="control-group controls">
             <h3>Edit</h3>
         </div>
@@ -34,8 +34,30 @@
 				</textarea>
 			</div>
 		</div>
+        <!--google map placeholder-->
+
+        <!--google map actions-->
+        <div class="control-group">
+            <!--<label class="control-label" ><h4>Search</h4></label>-->
+
+            <div class="controls">
+                <h5>Click on the map to add a new place (marker) to the event. Click on the marker to check current weather conditions.</h5>
+                <button data-ng-show="global.user._id == event.user._id" ng-click="GoogleMaps.search()"  class="btn">Search for a new place</button>
+                <input data-ng-show="global.user._id == event.user._id" type="text" class="span3"  data-ng-model="newPlace" id="searchMap" placeholder="enter new place to visit here">
+                <div id="map_canvas" style="width: 630px; height: 300px;">
+                    {{GoogleMaps.createMap()}}
+                </div>
+                <button data-ng-show="global.user._id == event.user._id" ng-click="GoogleMaps.getCurrentLocation()"  class="btn">Get current location</button>
+                <button data-ng-show="global.user._id == event.user._id" ng-click="GoogleMaps.deleteMarkers()"  class="btn">Clear markers from event</button>
+                <button data-ng-show="global.user._id == event.user._id" ng-click="GoogleMaps.addMarkersToEvent()"  class="btn">Add markers from event</button>
+
+
+
+           </div>
+        </div>
+        <!--google map placeholder-->
 		<div class="controls">
-            <button  type="submit" class="btn btn-primary">Update</button>
+            <button  type="submit" ng-click="update()" class="btn btn-primary">Update Event</button>
 		</div>
 	</form>
 </section>
