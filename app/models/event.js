@@ -34,11 +34,7 @@ var EventSchema = new Schema({
         type: Boolean,
         default: true
     },
-    destinations:[{
-        place: String,
-        latitude: String,
-        longitude: String
-    }],
+    destinations:[{lat: Number, lng: Number, title: String}],
     user: {
         type: Schema.ObjectId,
         ref: 'User'

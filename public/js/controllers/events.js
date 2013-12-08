@@ -6,6 +6,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         var event = new Events({
             title: this.title,
             file_url:  $scope.file_url,
+            destinations: $scope.GoogleMaps.getFormaterMarkers(),
             content: this.content
 
         });
@@ -33,9 +34,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
             $location.path("events/");
         });
-
-
-
     };
 
     $scope.update = function() {
@@ -46,6 +44,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         }
         event.updated.push(new Date().getTime());
         event.file_url = $scope.file_url;
+        event.destinations = $scope.GoogleMaps.getFormaterMarkers();
 
         event.$update(function() {
             $location.path('events/' + event._id);
@@ -187,7 +186,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
                 var latLong = results[0].geometry.location;
                 var coord ={};
                 coord.latLng = latLong;
-                $scope.GoogleMaps.createMarker(coord);
+                $scope.GoogleMaps.createMarker(coord, place);
                 // results is an array of GeocoderResult objects. Using only results[0] is sufficient
                 // check the documentation to see what a GeocoderResult object looks like:
                 // https://developers.google.com/maps/documentation/javascript/reference#GeocoderResult
@@ -196,20 +195,18 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
             }
         });
     }
-    $scope.GoogleMaps.createMarker = function (event){
+    $scope.GoogleMaps.createMarker = function (event, place){
+        if(!place){place = '';}
         var marker = new google.maps.Marker(
             {
                 map: $scope.GoogleMaps.map,
                 position: event.latLng,
-                title: "NEW MARKER"
+                title: place
             });
         google.maps.event.addListener(marker, "click", function(event) {
             $scope.GoogleMaps.openMarkerPopup(marker);
         });
         $scope.GoogleMaps.markers.push(marker);
-
-
-
     }
     $scope.GoogleMaps.openMarkerPopup = function (marker) {
         var markerIndex = $scope.GoogleMaps.markerIndex;
@@ -237,11 +234,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
     $scope.GoogleMaps.deleteMarkers = function () {
         $scope.GoogleMaps.clearMarkers();
         $scope.GoogleMaps.markers = [];
-    }
-    $scope.GoogleMaps.addMarkersToEvent = function () {
-        for (var i = 0; i < $scope.GoogleMaps.markers.length; i++) {
-            var marker = $scope.GoogleMaps.markers[i];
-        }
     }
     $scope.GoogleMaps.getCurrentLocation = function () {
         var map = $scope.GoogleMaps.map;
@@ -286,7 +278,47 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
             onError();
         }
     }
+    $scope.GoogleMaps.getFormaterMarkers = function(){
 
+        var data = $scope.GoogleMaps.markers;
+        //data is an array of many markers objects
+        newData = [];
+
+        for(var i = 0; i < data.length; i++) {
+            var obj = new Object();;
+            obj.lat = data[i].position.lat();
+            obj.lng = data[i].position.lng();
+            obj.title = data[i].title;
+            newData.push(obj);
+        }
+
+        return newData;
+    }
+    $scope.GoogleMaps.createMarkersFromDestinations = function(){
+
+        var event = $scope.event;
+        if(!event){return;}
+
+        var data = event.destinations;
+        newData = [];
+
+        var center = {lat:0,lng:0};
+
+        for(var i = 0; i < data.length; i++) {
+            var coord = {};
+            coord.latLng = new google.maps.LatLng(data[i].lat, data[i].lng, false);
+            $scope.GoogleMaps.createMarker(coord);
+            center.lat += data[i].lat;
+            center.lng += data[i].lng;
+        }
+
+        center.lat = center.lat/data.length;
+        center.lng = center.lng/data.length;
+        $scope.GoogleMaps.map.setCenter(new google.maps.LatLng(center.lat, center.lng));
+
+
+        return newData;
+    }
 
     //end google maps
     //start weather REST
@@ -310,7 +342,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
             }
 
 
-            var contentString = "<div class='weatherbox' style='width: 100px;' id='" + (el_id) + "'>" +
+            var contentString = "<div class='weatherbox' style='width: 150px;' id='" + (el_id) + "'>" +
                 forecast + "</div>";
 
             var newPopup = new google.maps.InfoWindow({
