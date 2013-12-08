@@ -46,7 +46,8 @@ window.app.config(['$routeProvider',
         }).
         //home
         when('/', {
-            templateUrl: 'views/index.html'
+            templateUrl: 'views/index.html',
+            controller: 'IndexController'
         }).
         otherwise({
             redirectTo: '/'

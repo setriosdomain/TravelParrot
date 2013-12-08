@@ -30,6 +30,10 @@ var EventSchema = new Schema({
     },
     periodFrom: Date,
     periodTo: Date,
+    public: {
+        type: Boolean,
+        default: true
+    },
     destinations:[{
         place: String,
         latitude: String,
