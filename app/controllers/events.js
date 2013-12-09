@@ -26,6 +26,9 @@ exports.create = function(req, res) {
     var event = new Event(req.body);
     event.user = req.user;
 
+    if(!event.periodTo || !event.periodFrom){event.periodTo = null;event.periodFrom = null;
+    }else if(event.periodTo < event.periodFrom){event.periodTo = event.periodFrom;}
+
     event.save(function(err) {
         if (err) {
             return res.send('users/signup', {
@@ -44,6 +47,9 @@ exports.update = function(req, res) {
     var event = req.event;
 
     event = _.extend(event, req.body);
+
+    if(!event.periodTo || !event.periodFrom){event.periodTo = null;event.periodFrom = null;
+    }else if(event.periodTo < event.periodFrom){event.periodTo = event.periodFrom;}
 
     event.save(function(err) {
         res.jsonp(event);

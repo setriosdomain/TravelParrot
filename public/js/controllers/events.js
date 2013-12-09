@@ -408,13 +408,23 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
       $scope.DatePicker.dateTo = $scope.event.periodTo;
 
     };
-    $scope.DatePicker.validateDates = function(){
-        if(!$scope.DatePicker.dateTo){return;}
-        if(!$scope.DatePicker.dateFrom){return;}
+    $scope.$watch('DatePicker.dateFrom', function(newval, oldval){
         if($scope.DatePicker.dateTo < $scope.DatePicker.dateFrom){
-            $scope.DatePicker.dateFrom = null;
+            $scope.DatePicker.dateTo = null;
         }
-    }
+    });
+    $scope.$watch('DatePicker.dateTo', function(newval, oldval){
+        if($scope.DatePicker.dateTo < $scope.DatePicker.dateFrom){
+            $scope.DatePicker.dateTo = null;
+        }
+    });
+//    $scope.DatePicker.validateDates = function(){
+//        if(!$scope.DatePicker.dateTo){return;}
+//        if(!$scope.DatePicker.dateFrom){return;}
+//        if($scope.DatePicker.dateTo < $scope.DatePicker.dateFrom){
+//            $scope.DatePicker.dateTo = null;
+//        }
+//    }
 
     // Shorthand for $( document ).ready()
     $(function() {
