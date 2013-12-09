@@ -122,12 +122,13 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
     $scope.GoogleMaps = {};
     $scope.GoogleMaps.map = null;
     $scope.GoogleMaps.geocoder = null;
-    $scope.GoogleMaps.directionService = new google.maps.DirectionsService();
-    $scope.GoogleMaps.directionsDisplay;
     $scope.GoogleMaps.markerIndex = 0;
     $scope.GoogleMaps.markers = [];
+    $scope.GoogleMaps.directionService = new google.maps.DirectionsService();
+    $scope.GoogleMaps.directionsDisplay;
 
-    $scope.GoogleMaps.createMap = function (options) {
+    function createMap(options) {
+        //alert($scope.$id);
         if($scope.GoogleMaps.map != null){return;}
         var divMap = document.getElementById("map_canvas");
         if(!divMap){
@@ -157,7 +158,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
         //resizes map with a maxWidthand MaxHeight and keeping the center of tha map.
         google.maps.event.addDomListener(window, "resize", function() {
-            //return;
             var center = $scope.GoogleMaps.map.getCenter();
             google.maps.event.trigger($scope.GoogleMaps.map, 'resize');
             var marginLeft = 40;
@@ -175,8 +175,10 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
                 $('#map_canvas').css("height",maxHeight);
             }
             $scope.GoogleMaps.map.setCenter(center);
-            $scope.GoogleMaps.map.setZoom( $scope.GoogleMaps.map.getZoom());
+
         });
+        //$scope.GoogleMaps.map.setZoom(15);
+
     }
 
     $scope.GoogleMaps.search = function(){
@@ -269,6 +271,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
                     map.setCenter(coords.latLng);
                     map.setZoom(15);
 
+
                     //map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude, false));
 
 
@@ -311,7 +314,9 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
         if(data.length == 1){
             $scope.GoogleMaps.map.setCenter(new google.maps.LatLng(data[0].lat, data[0].lng, false));
-
+            $scope.GoogleMaps.createMarker({
+                latLng : new google.maps.LatLng(data[0].lat, data[0].lng)}, data[0].title);
+            $scope.GoogleMaps.map.setZoom(15);
         }else
         {
             var markerBounds = new google.maps.LatLngBounds();
@@ -400,11 +405,16 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
       $scope.DatePicker.dateTo = $scope.event.periodTo;
 
     };
+
+    // Shorthand for $( document ).ready()
+    $(function() {
+        createMap();
+    });
     //date pickers
     $scope.InitializeEventData = function(){
-        $scope.file_url = $scope.event.file_url;
-        $scope.DatePicker.initializeDatesFromEvent();
-        $scope.GoogleMaps.createMap();
+        //alert($scope.$id);
         $scope.GoogleMaps.createMarkersFromDestinations();
+        $scope.DatePicker.initializeDatesFromEvent();
+        $scope.file_url = $scope.event.file_url;
     }
 }]);

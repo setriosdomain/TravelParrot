@@ -5,9 +5,6 @@
             <h2>Events</h2>
         </div>
         <li data-ng-repeat="event in events | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
-
-
-
             <div class="row bottom-space">
                     <div class="span1">
                        <div class="circle">
@@ -17,6 +14,10 @@
                     <div class="span9">
 
                         <h4><a data-ng-href="#!/events/{{event._id}}">{{event.title}}</a></h4>
+                        <h5>
+                            <div ng-show="event.periodFrom">From: {{event.periodFrom | date:'medium'}}</div>
+                            <div>To: {{event.periodTo | date:'medium'}}</div>
+                        </h5>
 
                         <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
                         <p>

@@ -1,16 +1,23 @@
-<section data-ng-init="findOne()">
-	<span>{{event.created | date:'medium'}}</span> /
+<section data-ng-init="findOne();">
+	<span>Created: {{event.created | date:'medium'}}</span> /
 	<span>{{event.user.name}}</span>
 	<h2>{{event.title}}
         <a data-ng-show="global.user._id == event.user._id" ng-href="/#!/events/{{event._id}}/edit">edit</a>
         <a data-ng-show="global.user._id == event.user._id" ng-href="/#!/events/{{event._id}}/delete">delete</a>
     </h2>
+    <h5>
+        <div ng-show="event.periodFrom">From: {{event.periodFrom | date:'medium'}}</div>
+        <div ng-show="event.periodTo">To: {{event.periodTo | date:'medium'}}</div>
+    </h5>
     <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
 	<div class="row">&nbsp</div>
+
     <div>{{event.content}}</div>
     <div class="row">&nbsp</div>
-
+    <h5>Places to visit</h5>
     <!--google map placeholder-->
-    <div id="map_canvas" style="width: 630px; height: 300px;">
+    <div ng-show="event.destinations" id="map_canvas" style="width: 630px; height: 300px;"></div>
+    <div class="controls">
+        <button  type="button" ng-click="GoogleMaps.createMarkersFromDestinations()" class="btn">Zoom Extends</button>
     </div>
 </section>

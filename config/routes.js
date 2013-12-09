@@ -84,6 +84,7 @@ module.exports = function(app, passport, auth) {
     app.del('/events/:eventId', auth.requiresLogin, auth.event.hasAuthorization, events.destroy);
     //Finish with setting up the articleId param
     app.param('eventId', events.event);
+    app.get('/uploads/', function(){});//ignore request
 
     //Home route
     var index = require('../app/controllers/index');

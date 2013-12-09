@@ -1,9 +1,9 @@
-<section>
+<section data-ng-init="findOne();">
     <!--file upload override style-->
     <script type='text/javascript' src='/lib/fileUpload/bootstrap-filestyle.min.js'></script>
     <!--file upload override style-->
-    <form class="form-horizontal">
-		<div class="control-group">
+    <form class="form-horizontal" data-ng-submit="create()">
+        <div class="control-group">
 			<label class="control-label" for="title">Title</label>
 			<div class="controls">
 				<input type="text"  data-ng-model="title" id="title" placeholder="Title" class="field span7" required>
@@ -22,7 +22,6 @@
         </div>
         <!--end file-->
         <!--date pickers-->
-
         <div class="control-group">
             <label class="control-label" >From</label>
             <div class="controls">
@@ -53,9 +52,8 @@
             <label class="control-label" >Places to visit</label>
 
             <div class="controls">
-
-                <button  ng-click="GoogleMaps.search()"  class="btn">Search for a new place</button>
-                <input  type="text" class="span3"  data-ng-model="newPlace" id="searchMap" placeholder="enter new place to visit here">
+                <button  type="button"  ng-click="GoogleMaps.search()"  class="btn">Search for a new place</button>
+                <input  type="text" class="span3"   id="searchMap" placeholder="enter new place to visit here">
                 <div class="row">&nbsp</div>
                 <div id="map_canvas" style="width: 670px; height: 300px;">
                 </div>
@@ -64,14 +62,15 @@
                     <br> Click on the marker to check current weather conditions.
                 </p>
                 <!--<div class="row">&nbsp</div>-->
-                <button  ng-click="GoogleMaps.getCurrentLocation()"  class="btn">Get current location</button>
-                <button  ng-click="GoogleMaps.deleteMarkers()"  class="btn">Clear markers from event</button>
+                <button  type="button" ng-click="GoogleMaps.getCurrentLocation()"  class="btn">Get current location</button>
+                <button  type="button" ng-click="GoogleMaps.deleteMarkers()"  class="btn">Clear markers from event</button>
+
             </div>
         </div>
         <!--google map placeholder-->
 		<div class="control-group">
 			<div class="controls">
-                <button ng-click="create()" name="submit" type="submit" class="btn btn-primary">Create</button>
+                <button  name="submit" type="submit" class="btn btn-primary">Create</button>
 				<!--<input type="submit" class="btn">-->
 			</div>
 		</div>
