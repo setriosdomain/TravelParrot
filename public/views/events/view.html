@@ -1,6 +1,4 @@
 <section data-ng-init="findOne();">
-	<span>Created: {{event.created | date:'medium'}}</span> /
-	<span>{{event.user.name}}</span>
 	<h2>{{event.title}}
         <a data-ng-show="global.user._id == event.user._id" ng-href="/#!/events/{{event._id}}/edit">edit</a>
         <a data-ng-show="global.user._id == event.user._id" ng-href="/#!/events/{{event._id}}/delete">delete</a>
@@ -14,10 +12,13 @@
 
     <div>{{event.content}}</div>
     <div class="row">&nbsp</div>
-    <h5>Places to visit</h5>
+    <h5 ng-show="event.destinations">Places to visit</h5>
     <!--google map placeholder-->
     <div ng-show="event.destinations" id="map_canvas" style="width: 630px; height: 300px;"></div>
+
     <div class="controls">
-        <button  type="button" ng-click="GoogleMaps.createMarkersFromDestinations()" class="btn">Zoom Extends</button>
+        <button ng-show="event.destinations" type="button" ng-click="GoogleMaps.createMarkersFromDestinations()" class="btn">Zoom Extends</button>
     </div>
+    <div class="row">&nbsp</div>
+    <span>Created: {{event.created | date:'medium'}}</span><br><span>By: {{event.user.name}}</span>
 </section>
