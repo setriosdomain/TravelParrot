@@ -1,4 +1,4 @@
-angular.module('mean.events').controller('EventsController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Events', function ($scope, $upload, $routeParams, $location, Global, Events) {
+angular.module('mean.events').controller('EventsController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Events', '$timeout', function ($scope, $upload, $routeParams, $location, Global, Events, $timeout) {
     $scope.global = Global;
 
     $scope.create = function() {
@@ -7,6 +7,8 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
             title: this.title,
             file_url:  $scope.file_url,
             destinations: $scope.GoogleMaps.getFormaterMarkers(),
+            periodFrom: $scope.DatePicker.dateFrom,
+            periodTo: $scope.DatePicker.dateTo,
             content: this.content
 
         });
@@ -44,6 +46,8 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         }
         event.updated.push(new Date().getTime());
         event.file_url = $scope.file_url;
+        event.periodFrom = $scope.DatePicker.dateFrom;
+        event.periodTo = $scope.DatePicker.dateTo;
         event.destinations = $scope.GoogleMaps.getFormaterMarkers();
 
         event.$update(function() {
@@ -68,8 +72,9 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
             eventId: $routeParams.eventId
         }, function(event) {
             $scope.event = event;
-            $scope.file_url = event.file_url;
+            $scope.InitializeEventData();
         });
+
     };
 
 
@@ -173,6 +178,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
             $scope.GoogleMaps.map.setZoom( $scope.GoogleMaps.map.getZoom());
         });
     }
+
     $scope.GoogleMaps.search = function(){
         var place = $('#searchMap').val();
         if(!place){return;}
@@ -300,30 +306,28 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         if(!event){return;}
 
         var data = event.destinations;
+        if(!data || data.length == 0){return;}
         newData = [];
 
-        var markerBounds = new google.maps.LatLngBounds();
-        //var center = {lat:0,lng:0};
+        if(data.length == 1){
+            $scope.GoogleMaps.map.setCenter(new google.maps.LatLng(data[0].lat, data[0].lng, false));
 
-        for(var i = 0; i < data.length; i++) {
-            var coord = {};
-            coord.latLng = new google.maps.LatLng(data[i].lat, data[i].lng, false);
-            $scope.GoogleMaps.createMarker(coord);
-            //center.lat += data[i].lat;
-            //center.lng += data[i].lng;
-            markerBounds.extend(coord.latLng);
-        }
-
-        //center.lat = center.lat/data.length;
-        //center.lng = center.lng/data.length;
-        //$scope.GoogleMaps.map.setCenter(new google.maps.LatLng(center.lat, center.lng));
-        $scope.GoogleMaps.map.panToBounds(markerBounds);
-        if($scope.GoogleMaps.map.getZoom() > 0.5){
-            $scope.GoogleMaps.map.setZoom($scope.GoogleMaps.map.getZoom() -0.5);
+        }else
+        {
+            var markerBounds = new google.maps.LatLngBounds();
+            for(var i = 0; i < data.length; i++) {
+                var coord = {
+                    latLng : new google.maps.LatLng(data[i].lat, data[i].lng, false)
+                };
+                $scope.GoogleMaps.createMarker(coord, data[i].title);
+                markerBounds.extend(coord.latLng);
+            }
+            $scope.GoogleMaps.map.fitBounds(markerBounds);
         }
 
         return newData;
     }
+
 
     //end google maps
     //start weather REST
@@ -361,4 +365,46 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
     }
     //end weather REST
+    //date pickers
+    $scope.DatePicker = {};
+    $scope.DatePicker.today = function() {
+        $scope.DatePicker.dateFrom = new Date();
+        $scope.DatePicker.dateTo = new Date();
+    };
+
+    $scope.DatePicker.dateFromOpen = function() {
+        $timeout(function() {
+            $scope.DatePicker.dateFromOpened = true;
+        });
+    };
+    $scope.DatePicker.dateToOpen = function() {
+        $timeout(function() {
+            $scope.DatePicker.dateToOpened = true;
+        });
+    };
+
+    $scope.DatePicker.dateOptions = {
+        'year-format': "'yy'",
+        'starting-day': 1
+    };
+
+    $scope.DatePicker.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+    $scope.DatePicker.format = $scope.DatePicker.formats[0];
+
+    $scope.DatePicker.initializeDatesFromEvent = function(){
+      if(!$scope.event){
+          $scope.DatePicker.today();
+          return;
+      }
+      $scope.DatePicker.dateFrom = $scope.event.periodFrom;
+      $scope.DatePicker.dateTo = $scope.event.periodTo;
+
+    };
+    //date pickers
+    $scope.InitializeEventData = function(){
+        $scope.file_url = $scope.event.file_url;
+        $scope.DatePicker.initializeDatesFromEvent();
+        $scope.GoogleMaps.createMap();
+        $scope.GoogleMaps.createMarkersFromDestinations();
+    }
 }]);
