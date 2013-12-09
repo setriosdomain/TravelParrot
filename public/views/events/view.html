@@ -14,9 +14,8 @@
     <div class="row">&nbsp</div>
     <h5 ng-show="event.destinations">Places to visit</h5>
     <!--google map placeholder-->
-    <div ng-show="event.destinations" id="map_canvas" style="width: 630px; height: 300px;"></div>
-
     <div class="controls">
+        <div ng-show="event.destinations" id="map_canvas" style="width: 630px; height: 300px;"></div>
         <button ng-show="event.destinations" type="button" ng-click="GoogleMaps.createMarkersFromDestinations()" class="btn">Zoom Extends</button>
     </div>
     <div class="row">&nbsp</div>

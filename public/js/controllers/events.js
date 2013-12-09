@@ -312,8 +312,10 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         if(!data || data.length == 0){return;}
         newData = [];
 
+
+        $scope.GoogleMaps.map.setCenter(new google.maps.LatLng(data[0].lat, data[0].lng, false));
+
         if(data.length == 1){
-            $scope.GoogleMaps.map.setCenter(new google.maps.LatLng(data[0].lat, data[0].lng, false));
             $scope.GoogleMaps.createMarker({
                 latLng : new google.maps.LatLng(data[0].lat, data[0].lng)}, data[0].title);
             $scope.GoogleMaps.map.setZoom(15);
@@ -377,6 +379,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         $scope.DatePicker.dateTo = new Date();
     };
 
+
     $scope.DatePicker.dateFromOpen = function() {
         $timeout(function() {
             $scope.DatePicker.dateFromOpened = true;
@@ -405,6 +408,13 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
       $scope.DatePicker.dateTo = $scope.event.periodTo;
 
     };
+    $scope.DatePicker.validateDates = function(){
+        if(!$scope.DatePicker.dateTo){return;}
+        if(!$scope.DatePicker.dateFrom){return;}
+        if($scope.DatePicker.dateTo < $scope.DatePicker.dateFrom){
+            $scope.DatePicker.dateFrom = null;
+        }
+    }
 
     // Shorthand for $( document ).ready()
     $(function() {

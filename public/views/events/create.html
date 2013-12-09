@@ -26,7 +26,7 @@
             <label class="control-label" >From</label>
             <div class="controls">
                 <p>
-                    <input type="text" datepicker-popup="{{DatePicker.format}}" ng-model="DatePicker.dateFrom" is-open="DatePicker.dateFromOpened" min="DatePicker.minDate" max="'2015-06-22'" datepicker-options="DatePicker.dateOptions" date-disabled="DatePicker.disabled(date, mode)"  show-weeks="false" close-text="Close" />
+                    <input  type="text" datepicker-popup="{{DatePicker.format}}" ng-model="DatePicker.dateFrom" is-open="DatePicker.dateFromOpened" min="DatePicker.minDate" max="'2015-06-22'" datepicker-options="DatePicker.dateOptions" date-disabled="DatePicker.disabled(date, mode)"  ng-required="true" show-weeks="false" ng-change="DatePicker.validateDates()" close-text="Close" />
                     <button type="button" class="btn" ng-click="DatePicker.dateFromOpen()"><i class="icon-calendar"></i></button>
                 </p>
             </div>
@@ -35,7 +35,7 @@
             <label class="control-label" >To</label>
             <div class="controls">
                 <p>
-                    <input type="text" datepicker-popup="{{DatePicker.format}}" ng-model="DatePicker.dateTo" is-open="DatePicker.dateToOpened" min="DatePicker.minDate" max="'2015-06-22'" datepicker-options="DatePicker.dateOptions" date-disabled="DatePicker.disabled(date, mode)" show-weeks="false"  close-text="Close" />
+                    <input type="text" datepicker-popup="{{DatePicker.format}}" ng-model="DatePicker.dateTo" is-open="DatePicker.dateToOpened" min="DatePicker.minDate" max="'2015-06-22'" datepicker-options="DatePicker.dateOptions" date-disabled="DatePicker.disabled(date, mode)"  ng-required="true" show-weeks="false" ng-change="DatePicker.validateDates()"  close-text="Close" />
                     <button type="button" class="btn" ng-click="DatePicker.dateToOpen()"><i class="icon-calendar"></i></button>
                 </p>
             </div>

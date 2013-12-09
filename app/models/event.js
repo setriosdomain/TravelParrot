@@ -53,6 +53,12 @@ var EventSchema = new Schema({
 EventSchema.path('title').validate(function(title) {
     return title.length;
 }, 'Title cannot be blank');
+EventSchema.path('periodFrom').validate(function(periodFrom) {
+    return periodFrom.length;
+}, 'periodFrom cannot be blank');
+EventSchema.path('periodTo').validate(function(periodTo) {
+    return periodTo.length;
+}, 'periodTo cannot be blank');
 /**
  * Statics
  */
