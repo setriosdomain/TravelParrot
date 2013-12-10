@@ -1,0 +1,11 @@
+<section data-ng-init="findOne()">
+    <div data-ng-show="user.name"><h3>Name</h3>{{user.name}}</div>
+    <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{user.picture}}">
+    <div data-ng-show="user.email"><h3>Email</h3>{{user.email}}</div>
+    <div data-ng-show="user.username"><h3>Username</h3>{{user.username}}</div>
+    <div class="row">&nbsp;</div>
+    <pre data-ng-show="global.user._id == user._id"><h5>Are you sure you want to delete this profile?</h5></pre>
+    <button data-ng-show="global.user._id == user._id" ng-click="remove()" class="btn btn-primary">Yes</button>
+    <button data-ng-show="global.user._id == user._id" ng-click="usersHome()" class="btn btn-primary">No</button>
+
+</section>

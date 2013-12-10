@@ -2,7 +2,9 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    _ = require('underscore'),
+    fileUpload = require('./file-upload');
 
 /**
  * Auth callback
@@ -68,15 +70,50 @@ exports.create = function(req, res) {
 };
 
 /**
+ * Update a user
+ */
+exports.update = function(req, res) {
+    var user = req.profile;
+
+    user = _.extend(user, req.body);
+
+    user.save(function(err) {
+        res.jsonp(user);
+    });
+};
+/**
+ * Delete a user
+ */
+exports.destroy = function(req, res) {
+    var user = req.profile;
+
+    user.remove(function(err) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+
+            fileUpload.deleteUploadedFile(user.picture);
+
+            res.jsonp(user);
+        }
+    });
+};
+/**
  *  Show profile
  */
 exports.show = function(req, res) {
-    var user = req.profile;
+    res.jsonp(req.profile);
 
-    res.render('users/show', {
-        title: user.name,
-        user: user
-    });
+//    var user = req.profile;
+//
+//    res.render('users/show', {
+//        title: user.name,
+//        user: user
+//    });
+
+
 };
 
 /**
@@ -100,4 +137,19 @@ exports.user = function(req, res, next, id) {
             req.profile = user;
             next();
         });
+};
+
+/**
+ * List of Users
+ */
+exports.all = function(req, res) {
+    User.find().sort('-username').exec(function(err, users) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(users);
+        }
+    });
 };

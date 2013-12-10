@@ -1,0 +1,48 @@
+<section data-ng-init="findOne()">
+    <!--file upload override style-->
+    <script type='text/javascript' src='/lib/fileUpload/bootstrap-filestyle.min.js'></script>
+    <!--file upload override style-->
+	<form class="form-horizontal" data-ng-submit="update()" >
+        <div class="control-group controls">
+            <h3>Edit Profile</h3>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="name">Name</label>
+            <div class="controls">
+                <input type="text" data-ng-model="user.name" class="field span7" placeholder="name" required>
+                </input>
+            </div>
+        </div>
+        <!--start file-->
+        <div class="control-group">
+            <label class="control-label" for="image">Picture</label>
+            <!--<div class="controls" ng-controller="FileUploadCtrl">-->
+            <div class="controls">
+                <img ng-show="file_url != ''" width="63" height="30" ng-src="/uploads/{{file_url}}">
+                <!--file input customized using bootstrap-filestyle.-->
+                <input ng-file-select="onFileSelect($files)" id="image" type="file" accept="image/*" class="filestyle" data-buttonText="Choose image" data-classButton="btn btn-primary" data-icon="false" data-input="false">
+                <button  type="button" ng-click="clearImage()" class="btn btn-primary">Clear</button>
+            </div>
+
+        </div>
+        <!--end file-->
+        <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+
+            <div class="controls">
+                <input type="email" data-ng-model="user.email" id="email" class="field span7" placeholder="email">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="username">Username</label>
+            <div class="controls">
+                <input type="text" data-ng-model="user.username" id="username"  class="field span7" placeholder="username" required>
+                </input>
+            </div>
+        </div>
+
+		<div class="controls">
+            <button  type="submit" class="btn btn-primary">Update Profile</button>
+		</div>
+	</form>
+</section>

@@ -1,0 +1,12 @@
+<section data-ng-init="findOne();">
+    <div class="controls">
+        <div data-ng-show="user.name"><h3>Name</h3>{{user.name}}</div>
+        <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{user.picture}}">
+        <div data-ng-show="user.email"><h3>Email</h3>{{user.email}}</div>
+        <div data-ng-show="user.username"><h3>Username</h3>{{user.username}}</div>
+        <h2>
+            <a data-ng-show="global.user._id == user._id" ng-href="/#!/users/{{user._id}}/edit">edit</a>
+            <a data-ng-show="global.user._id == user._id" ng-href="/#!/users/{{user._id}}/delete">delete</a>
+        </h2>
+    </div>
+</section>

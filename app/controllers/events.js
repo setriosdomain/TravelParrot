@@ -56,7 +56,7 @@ exports.update = function(req, res) {
     });
 };
 /**
- * Delete an article
+ * Delete an event
  */
 exports.destroy = function(req, res) {
     var event = req.event;
@@ -85,7 +85,7 @@ exports.show = function(req, res) {
  * List of events
  */
 exports.all = function(req, res) {
-    Event.find().sort('-created').populate('user', 'name username').exec(function(err, events) {
+    Event.find().sort({periodFrom: 'desc'}).populate('user', 'name username').exec(function(err, events) {
         if (err) {
             res.render('error', {
                 status: 500

@@ -8,7 +8,10 @@ module.exports = function(app, passport, auth) {
     app.get('/signout', users.signout);
 
     //Setting up the users api
+    app.get('/users', users.all);
     app.post('/users', users.create);
+    app.put('/users/:userId', auth.requiresLogin, auth.user.hasAuthorization, users.update);
+    app.del('/users/:userId', auth.requiresLogin, auth.user.hasAuthorization, users.destroy);
 
     app.post('/users/session', passport.authenticate('local', {
         failureRedirect: '/signin',
@@ -85,6 +88,8 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the articleId param
     app.param('eventId', events.event);
     app.get('/uploads/', function(){});//ignore request
+
+
 
     //Home route
     var index = require('../app/controllers/index');

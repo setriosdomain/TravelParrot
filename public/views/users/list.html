@@ -1,0 +1,30 @@
+<section data-ng-init="find()">
+
+	<ul class="events unstyled">
+        <div class="page-header">
+            <h2>Users</h2>
+        </div>
+        <li data-ng-repeat="user in users | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
+            <div class="row bottom-space">
+
+                    <div class="span9">
+                        <img ng-show="showImage(event)" width="315" height="150" ng-src="/uploads/{{user.picture}}">
+                        <h4><a data-ng-href="#!/users/{{user._id}}">{{user.name}}</a></h4>
+
+
+                    </div>
+            </div>
+		</li>
+	</ul>
+
+    <div data-ng-show="!users || users.length > 10" class="well well-small">
+        <pagination total-items="confPagination.totalItems"
+                    page="confPagination.currentPage"
+                    max-size="confPagination.maxSize"
+                    class="pagination"
+                    boundary-links= confPagination.boundaryLinks>
+        </pagination>
+    </div>
+
+
+</section>

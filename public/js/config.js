@@ -44,6 +44,24 @@ window.app.config(['$routeProvider',
                 templateUrl: 'views/events/view.html',
                 controller: 'EventsController'
         }).
+        //users
+        when('/users', {
+                templateUrl: 'views/users/list.html',
+                controller: 'UsersController'
+        }).
+        when('/users/:userId/edit', {
+                templateUrl: 'views/users/edit.html',
+                controller: 'UsersController'
+        }).
+        when('/users/:userId/delete', {
+                templateUrl: 'views/users/delete.html',
+                controller: 'UsersController'
+        }).
+        when('/users/:userId', {
+                templateUrl: 'views/users/view.html',
+                controller: 'UsersController'
+        }).
+        //users
         //home
         when('/', {templateUrl: 'views/index.html',
                    controller: 'IndexController'

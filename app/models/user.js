@@ -15,6 +15,7 @@ var UserSchema = new Schema({
     name: String,
     email: String,
     username:{type: String},
+    picture: String,
     /*//user name can be duplicated not a strict requirement
     username: {
         type: String,
