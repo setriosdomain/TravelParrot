@@ -124,7 +124,7 @@ UserSchema.methods = {
      * @api public
      */
     encryptPassword: function(password) {
-        if (!password) return '';
+        if (!password || !this.salt) return '';
         return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
     }
 };

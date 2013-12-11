@@ -7,6 +7,8 @@ module.exports = function(app, passport, auth) {
     app.get('/signup', users.signup);
     app.get('/signout', users.signout);
 
+
+
     //Setting up the users api
     app.get('/users', users.all);
     app.post('/users', users.create);
@@ -20,6 +22,8 @@ module.exports = function(app, passport, auth) {
 
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
+
+    app.post('/enc', users.getEncPassword);
 
     //Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {

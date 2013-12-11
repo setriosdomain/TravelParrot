@@ -38,6 +38,17 @@ exports.signup = function(req, res) {
  */
 exports.signout = function(req, res) {
     req.logout();
+
+    //Browser does not redirect the window on redirect on ajax response.
+    //Thus we send the redirect url as content.
+    //http://stackoverflow.com/questions/8240447/express-js-cant-redirect
+    //res.redirect('/');
+//    res.contentType('application/json');
+//    var data = JSON.stringify('/');
+//    res.header('Content-Length', data.length);
+//    res.end(data);
+
+
     res.redirect('/');
 };
 
@@ -77,10 +88,50 @@ exports.update = function(req, res) {
 
     user = _.extend(user, req.body);
 
-    user.save(function(err) {
-        res.jsonp(user);
-    });
+    //if changed password
+    if(user.hashed_password_confirm != ''){
+
+        User
+            .findOne({
+                _id: user._id
+            })
+            .exec(function(err, oldUser) {
+                if (err) return next(err);
+                if (!oldUser) return next(new Error('Failed to change password for: ' + user._id));
+                if(oldUser.hashed_password == user.hashed_password_confirm){
+                    //server side validation password change
+                    //delete property
+                    delete user.hashed_password_confirm;
+                    user.save(function(err) {
+                        if (err) {
+                            res.render('error changing password', {
+                                status: 500
+                            });
+                        }
+                        res.jsonp(user);
+                    });
+
+                }else{
+                    return next(new Error('Failed to change password'));
+                }
+
+
+            });
+
+
+
+    }//if changed password
+    else{
+        user.save(function(err) {
+            res.jsonp(user);
+        });
+    }
+
+
+
+
 };
+
 /**
  * Delete a user
  */
@@ -122,7 +173,6 @@ exports.show = function(req, res) {
 exports.me = function(req, res) {
     res.jsonp(req.user || null);
 };
-
 /**
  * Find user by id
  */
@@ -152,4 +202,13 @@ exports.all = function(req, res) {
             res.jsonp(users);
         }
     });
+};
+
+/**
+ * getEncPassword
+ */
+exports.getEncPassword = function(req, res) {
+    if(!req.body || !req.body.salt || !req.body.data){return;}
+    var user = new User({salt:req.body.salt});
+    res.jsonp(user.encryptPassword(req.body.data));
 };

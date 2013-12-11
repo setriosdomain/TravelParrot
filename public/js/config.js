@@ -53,6 +53,10 @@ window.app.config(['$routeProvider',
                 templateUrl: 'views/users/edit.html',
                 controller: 'UsersController'
         }).
+        when('/users/:userId/changePassword', {
+                templateUrl: 'views/users/change-password.html',
+                controller: 'UsersController'
+        }).
         when('/users/:userId/delete', {
                 templateUrl: 'views/users/delete.html',
                 controller: 'UsersController'

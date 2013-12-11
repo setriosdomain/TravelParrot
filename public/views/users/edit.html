@@ -5,6 +5,7 @@
 	<form class="form-horizontal" data-ng-submit="update()" >
         <div class="control-group controls">
             <h3>Edit Profile</h3>
+
         </div>
         <div class="control-group">
             <label class="control-label" for="name">Name</label>
@@ -42,7 +43,11 @@
         </div>
 
 		<div class="controls">
-            <button  type="submit" class="btn btn-primary">Update Profile</button>
+            <h4><a data-ng-href="#!/users/{{user._id}}/changePassword">Change password</a></h4>
 		</div>
+        <div class="row">&nbsp</div>
+        <div class="controls">
+            <button  type="submit" class="btn btn-primary">Update Profile</button>
+        </div>
 	</form>
 </section>

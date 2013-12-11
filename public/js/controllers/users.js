@@ -1,4 +1,4 @@
-angular.module('mean.users').controller('UsersController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Users','$http', function ($scope, $upload, $routeParams, $location, Global, Users, $http) {
+angular.module('mean.users').controller('UsersController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Users','$http','SignoutService','EncryptPassswordService', function ($scope, $upload, $routeParams, $location, Global, Users, $http, SignoutService, EncryptPassswordService) {
     $scope.global = Global;
 
 
@@ -13,14 +13,11 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
                     $scope.users.splice(i, 1);
                 }
             }
-            $http.get('/signout')
-                .success(function (data, status, headers, config) {
-                    //TODO: check not redirecting tested in firefox only.
-                    $location.path('/');
-                })
-                .error(function (data, status, headers, config) {
-                    alert("Dang It!" + status);
-                });
+            SignoutService.signout().success(function (data, status, headers, config) {
+                //TODO: check not redirecting maybe it cause an jaxa request?
+                $location.path('/');//fix and remove this.
+            });
+
 
         });
 
@@ -66,6 +63,7 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
         }, function(user) {
             $scope.user = user;
             $scope.file_url = user.picture;
+            $scope.changePasswordFields.oldPasswordEnc = user.hashed_password;
         });
     };
 
@@ -108,5 +106,61 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
     $scope.showImage = function(user){
         if(!user){return false;}
         return user.picture != '';
+    }
+    $scope.changePasswordFields = {
+        oldPasswordEnc: '',
+        oldPasswordConfirm: '',
+        oldPasswordEncConfirm: '',
+        password: '',
+        passwordConfirm: ''
+    };
+    $scope.updatePassword = function(){
+        var pswrds = $scope.changePasswordFields;
+        if(!pswrds.oldPasswordEnc){return;}
+        if(!pswrds.oldPasswordConfirm){return;}
+        if(!pswrds.password){return;}
+        if(!pswrds.passwordConfirm){return;}
+        if(pswrds.password != pswrds.passwordConfirm){return;}
+        if(pswrds.oldPasswordEnc != pswrds.oldPasswordEncConfirm){return;}
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/enc',
+            data: {
+                salt: $scope.user.salt,
+                data: pswrds.password
+            },
+            dataType: 'json',
+            success: function(data) {
+                //console.log('result ajax call:' + data);
+                $scope.user.hashed_password_confirm = pswrds.oldPasswordEnc;
+                $scope.user.hashed_password = data;
+                $scope.update();
+                $location.path('passwordChanged/');
+            }
+        });
+
+
+        $scope.changePasswordFields={};
+
+    }
+    $scope.passwordChangeRequestUpdate = function(newPassword){
+
+        newPassword = $scope.changePasswordFields.oldPasswordConfirm;
+
+            $.ajax({
+                type: 'POST',
+                url: '/enc',
+                data: {
+                    salt: $scope.user.salt,
+                    data: newPassword
+                },
+                dataType: 'json',
+                success: function(data) {
+                    //console.log('result ajax call:' + data);
+                    $scope.changePasswordFields.oldPasswordEncConfirm = data;
+                }
+            });
+
     }
 }]);
