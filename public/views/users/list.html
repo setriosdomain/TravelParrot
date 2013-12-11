@@ -1,17 +1,15 @@
 <section data-ng-init="find()">
 
 	<ul class="events unstyled">
-        <div class="page-header">
+        <div>
             <h2>Users</h2>
         </div>
         <li data-ng-repeat="user in users | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
-            <div class="row bottom-space">
+            <div class="row page-header bottom-space">
 
                     <div class="span9">
-                        <img ng-show="showImage(event)" width="315" height="150" ng-src="/uploads/{{user.picture}}">
                         <h4><a data-ng-href="#!/users/{{user._id}}">{{user.name}}</a></h4>
-
-
+                        <img ng-show="showImage(user.picture)" width="158" height="75" ng-src="/uploads/{{user.picture}}">
                     </div>
             </div>
 		</li>
