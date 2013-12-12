@@ -127,9 +127,9 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
     $scope.GoogleMaps.directionService = new google.maps.DirectionsService();
     $scope.GoogleMaps.directionsDisplay;
 
-    function createMap(options) {
+    $scope.GoogleMaps.createMap = function(options) {
         //alert($scope.$id);
-        if($scope.GoogleMaps.map != null){return;}
+        //if($scope.GoogleMaps.map != null){return;}
         var divMap = document.getElementById("map_canvas");
         if(!divMap){
             return;
@@ -150,7 +150,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         // map_canvas is the id of the HTML element we are using as the map canvas (see HTML snippet at the bottom)
         //$scope.GoogleMaps.map = new google.maps.Map(document.getElementById("map_canvas"), options);
         $scope.GoogleMaps.map = new google.maps.Map(divMap, options);
-        google.maps.event.addListener($scope.GoogleMaps.map, "click", $scope.GoogleMaps.createMarker);
+        //google.maps.event.addListener($scope.GoogleMaps.map, "click", $scope.GoogleMaps.createMarker);
         $scope.GoogleMaps.directionsDisplay = new google.maps.DirectionsRenderer();
         $scope.GoogleMaps.directionsDisplay.setMap($scope.GoogleMaps.map);
         var maxWidth = Number($('#map_canvas').css("width").replace(/[^\d\.]/g, ''));
@@ -425,15 +425,44 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 //            $scope.DatePicker.dateTo = null;
 //        }
 //    }
+    $scope.GoogleMaps.setupCreateMarkersEvent = function(){
+        google.maps.event.addListener($scope.GoogleMaps.map, "click", $scope.GoogleMaps.createMarker);
+        return '';
+    }
+    $scope.GoogleMaps.createMapForView = function(){
+        if($scope.GoogleMaps.hasNoDestinations()){
+            $scope.GoogleMaps.removeMapIfNoMarkers();
+            return '';
+        }
+        $scope.GoogleMaps.createMap();
+        $scope.GoogleMaps.createMarkersFromDestinations();
+        $scope.GoogleMaps.removeMapIfNoMarkers();
+        return '';
+    }
+    $scope.GoogleMaps.createMapForEdit = function(){
+        $scope.GoogleMaps.createMap();
+        $scope.GoogleMaps.createMarkersFromDestinations();
+        $scope.GoogleMaps.setupCreateMarkersEvent();
+        return '';
+    }
+    $scope.GoogleMaps.createMapForInsert = function(){
+        $scope.GoogleMaps.createMap();
+        $scope.GoogleMaps.setupCreateMarkersEvent();
+        return '';
+    }
+    $scope.GoogleMaps.hasNoDestinations = function(){
+        return (!$scope.event.destinations || $scope.event.destinations.length == 0);
+    }
+    $scope.GoogleMaps.removeMapIfNoMarkers = function(){
+        if($scope.GoogleMaps.hasNoDestinations()){
+            $('#map_canvas').css({width: "px",height: "0px"});
+        }
+        return '';
+    }
 
-    // Shorthand for $( document ).ready()
-    $(function() {
-        createMap();
-    });
     //date pickers
     $scope.InitializeEventData = function(){
-        //alert($scope.$id);
-        $scope.GoogleMaps.createMarkersFromDestinations();
+        if(!$scope.event){return;}
         $scope.DatePicker.initializeDatesFromEvent();
         $scope.file_url = $scope.event.file_url;
     }
