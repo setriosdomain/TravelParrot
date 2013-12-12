@@ -1,5 +1,6 @@
 angular.module('mean.system').controller('IndexController', ['$scope', 'Global', function ($scope, Global) {
     $scope.global = Global;
+    var user = $scope.global.user;
     $scope.confCarousel ={};
     $scope.confCarousel.slides = [];
 
@@ -20,4 +21,64 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
     $scope.confCarousel.setActiveSlide = function(idx) {
         $scope.slides[idx].active=true;
     };
+
+    $scope.getUserRecentEvents = function(){
+        $.ajax({
+            type: 'POST',
+            url: '/getUserRecentEvents',
+            data: {
+                userId: user._id
+            },
+            dataType: 'json',
+            success: function(events) {
+                if(!events){return;}
+                $scope.userRecentEvents = events;
+            }
+        });
+    };
+    $scope.getUserRecentEvents();
+
+    $scope.getUserRecentArticles = function(){
+        $.ajax({
+            type: 'POST',
+            url: '/getUserRecentArticles',
+            data: {
+                userId: user._id
+            },
+            dataType: 'json',
+            success: function(articles) {
+                if(!articles){return;}
+                $scope.userRecentArticles = articles;
+            }
+        });
+    };
+    $scope.getUserRecentArticles();
+
+    $scope.getRecentEvents = function(){
+        $.ajax({
+            url: '/getRecentEvents',
+            success: function(events) {
+
+                if(!events){return;}
+                $scope.recentEvents = events;
+            }
+        });
+    };
+    $scope.getRecentEvents();
+
+    $scope.getRecentArticles = function(){
+        $.ajax({
+            url: '/getRecentArticles',
+            success: function(articles) {
+
+                if(!articles){return;}
+                $scope.recentArticles = articles;
+            }
+        });
+    };
+    $scope.getRecentArticles();
+
+
+
+
 }]);

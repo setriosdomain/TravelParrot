@@ -23,6 +23,7 @@ module.exports = function(app, passport, auth) {
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
 
+    //$ ajax calls
     app.post('/enc', users.getEncPassword);
 
     //Setting the facebook oauth routes
@@ -98,5 +99,11 @@ module.exports = function(app, passport, auth) {
     //Home route
     var index = require('../app/controllers/index');
     app.get('/', index.render);
+
+    //$ ajax calls
+    app.post('/getUserRecentEvents', index.getUserRecentEvents);
+    app.post('/getUserRecentArticles', index.getUserRecentArticles);
+    app.get('/getRecentEvents', index.getRecentEvents);
+    app.get('/getRecentArticles', index.getRecentArticles);
 
 };

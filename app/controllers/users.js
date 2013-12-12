@@ -212,3 +212,4 @@ exports.getEncPassword = function(req, res) {
     var user = new User({salt:req.body.salt});
     res.jsonp(user.encryptPassword(req.body.data));
 };
+
