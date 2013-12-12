@@ -17,9 +17,7 @@
         <!--google map placeholder-->
         <button ng-show="event.destinations" type="button" ng-click="GoogleMaps.createMarkersFromDestinations()" class="btn">Zoom Extends</button>
         <!--<div ng-show="event.destinations" id="map_canvas" style="width: 630px; height: 300px;"></div>-->
-        <div id="map_canvas" style="width: 630px; height: 300px;">
-            {{GoogleMaps.createMapForView()}}
-        </div>
+        <div id="map_canvas_view" style="width: 630px; height: 300px;"></div>
         <div ng-show="event.destinations">
             <p>Click on the markers to check current weather conditions.</p>
         </div>

@@ -127,11 +127,22 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
     $scope.GoogleMaps.directionService = new google.maps.DirectionsService();
     $scope.GoogleMaps.directionsDisplay;
 
+    $scope.GoogleMaps.getMapContainer = function(){
+        var mapDiv = document.getElementById("map_canvas_view");
+        if(mapDiv){return mapDiv;}
+        mapDiv = document.getElementById("map_canvas_edit");
+        if(mapDiv){return mapDiv;}
+        mapDiv = document.getElementById("map_canvas_insert");
+        if(mapDiv){return mapDiv;}
+        return null;
+    }
+
+
     $scope.GoogleMaps.createMap = function(options) {
         //alert($scope.$id);
         //if($scope.GoogleMaps.map != null){return;}
-        var divMap = document.getElementById("map_canvas");
-        if(!divMap){
+        var divMapDom = $scope.GoogleMaps.getMapContainer();
+        if(!divMapDom){
             return;
         }
 
@@ -149,12 +160,15 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
         // map_canvas is the id of the HTML element we are using as the map canvas (see HTML snippet at the bottom)
         //$scope.GoogleMaps.map = new google.maps.Map(document.getElementById("map_canvas"), options);
-        $scope.GoogleMaps.map = new google.maps.Map(divMap, options);
+        $scope.GoogleMaps.map = new google.maps.Map(divMapDom, options);
         //google.maps.event.addListener($scope.GoogleMaps.map, "click", $scope.GoogleMaps.createMarker);
         $scope.GoogleMaps.directionsDisplay = new google.maps.DirectionsRenderer();
         $scope.GoogleMaps.directionsDisplay.setMap($scope.GoogleMaps.map);
-        var maxWidth = Number($('#map_canvas').css("width").replace(/[^\d\.]/g, ''));
-        var maxHeight = Number($('#map_canvas').css("height").replace(/[^\d\.]/g, ''));
+
+        var maxWidth = Number($(divMapDom).css("width").replace(/[^\d\.]/g, ''));
+        var maxHeight = Number($(divMapDom).css("height").replace(/[^\d\.]/g, ''));
+
+
 
         //resizes map with a maxWidthand MaxHeight and keeping the center of tha map.
         google.maps.event.addDomListener(window, "resize", function() {
@@ -164,15 +178,15 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
             var newWidth = $(window).width() - marginLeft;
             var newHeight = $(window).height()- marginLeft;
             if(newWidth <= maxWidth){
-                $('#map_canvas').css("width",newWidth);}
+                $(divMapDom).css("width",newWidth);}
             else{
-                $('#map_canvas').css("width",maxWidth);
+                $(divMapDom).css("width",maxWidth);
             }
             if(newHeight <= maxHeight){
-                $('#map_canvas').css("height",newHeight);
+                $(divMapDom).css("height",newHeight);
             }
             else{
-                $('#map_canvas').css("height",maxHeight);
+                $(divMapDom).css("height",maxHeight);
             }
             $scope.GoogleMaps.map.setCenter(center);
 
@@ -244,7 +258,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         $scope.GoogleMaps.markers = [];
     }
     $scope.GoogleMaps.getCurrentLocation = function () {
-        var map = $scope.GoogleMaps.map;
         var onError = function(error) {
             alert("Could not get the current location.");
         };
@@ -255,7 +268,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
                     // once we get here, we receive the position in the variable "position"
                     // we use it to create a LatLng object (see documentation) for later usage
-                    var currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    var currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude, false);
 
                     // now that we have the current location, we need use the Map API to move the map to this location
                     // you may also want to adjust the zoom level
@@ -265,11 +278,10 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
                     // see the API reference for the relevant functions (you need to set the location, and set the zoom level):
                     // https://developers.google.com/maps/documentation/javascript/reference#Map
-                    var coords ={};
-                    coords.latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude) ;
+                    var coords ={latLng : currentLocation};
                     $scope.GoogleMaps.createMarker(coords);
-                    map.setCenter(coords.latLng);
-                    map.setZoom(15);
+                    $scope.GoogleMaps.map.setCenter(currentLocation);
+                    $scope.GoogleMaps.map.setZoom(15);
 
 
                     //map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude, false));
@@ -317,7 +329,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
         if(data.length == 1){
             $scope.GoogleMaps.createMarker({
-                latLng : new google.maps.LatLng(data[0].lat, data[0].lng)}, data[0].title);
+                latLng : new google.maps.LatLng(data[0].lat, data[0].lng, false)}, data[0].title);
             $scope.GoogleMaps.map.setZoom(15);
         }else
         {
@@ -427,42 +439,48 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 //    }
     $scope.GoogleMaps.setupCreateMarkersEvent = function(){
         google.maps.event.addListener($scope.GoogleMaps.map, "click", $scope.GoogleMaps.createMarker);
-        return '';
     }
+
     $scope.GoogleMaps.createMapForView = function(){
+        if(!$('#map_canvas_view')[0]/*dom elem*/){return;}
         if($scope.GoogleMaps.hasNoDestinations()){
             $scope.GoogleMaps.removeMapIfNoMarkers();
-            return '';
+            return ;
         }
         $scope.GoogleMaps.createMap();
         $scope.GoogleMaps.createMarkersFromDestinations();
         $scope.GoogleMaps.removeMapIfNoMarkers();
-        return '';
     }
     $scope.GoogleMaps.createMapForEdit = function(){
+        if(!$('#map_canvas_edit')[0]/*dom elem*/){return;}
         $scope.GoogleMaps.createMap();
         $scope.GoogleMaps.createMarkersFromDestinations();
         $scope.GoogleMaps.setupCreateMarkersEvent();
-        return '';
     }
     $scope.GoogleMaps.createMapForInsert = function(){
+        if(!$('#map_canvas_insert')[0]/*dom elem*/){return;}
         $scope.GoogleMaps.createMap();
         $scope.GoogleMaps.setupCreateMarkersEvent();
-        return '';
     }
     $scope.GoogleMaps.hasNoDestinations = function(){
         return (!$scope.event.destinations || $scope.event.destinations.length == 0);
     }
     $scope.GoogleMaps.removeMapIfNoMarkers = function(){
         if($scope.GoogleMaps.hasNoDestinations()){
-            $('#map_canvas').css({width: "px",height: "0px"});
+            $($scope.GoogleMaps.getMapContainer()).css({width: "px",height: "0px"});
         }
-        return '';
     }
-
+    $(function() {
+        if(document.getElementById("map_canvas_insert")){
+            //creating a new event must init map
+            $scope.GoogleMaps.createMapForInsert();
+        }
+    });
     //date pickers
     $scope.InitializeEventData = function(){
         if(!$scope.event){return;}
+        $scope.GoogleMaps.createMapForView();
+        $scope.GoogleMaps.createMapForEdit();
         $scope.DatePicker.initializeDatesFromEvent();
         $scope.file_url = $scope.event.file_url;
     }
