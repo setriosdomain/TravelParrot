@@ -40,7 +40,27 @@ exports.create = function(req, res) {
         }
     });
 };
+/**
+ * Add an article comment.
+ */
+exports.addComment = function(req, res) {
+    if(!req.body.articleId || !req.body.comment){return;}
 
+
+    Article.load(req.body.articleId, function(err, orgArticle) {
+        if (err) return next(err);
+        if (!orgArticle) return next(new Error('Failed to load article ' + req.body.articleId));
+        if(!orgArticle.comments){
+            orgArticle.comments = [];
+        }
+        orgArticle.comments.push(req.body.comment);
+
+        orgArticle.save(function(err) {
+            res.jsonp(orgArticle);
+        });
+
+    });
+};
 /**
  * Update an article
  */

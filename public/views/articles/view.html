@@ -7,4 +7,21 @@
     </h2>
     <img ng-show="showImage(article)" width="630" height="300" ng-src="/uploads/{{article.file_url}}">
 	<div>{{article.content}}</div>
+    <div ng-show="article.comments && article.comments.length">
+        <h4>Comments</h4>
+        <ul class="unstyled">
+            <li ng-repeat="comment in article.comments">
+
+                <a ng-href="/#!/users/{{comment.user}}"><img width="60" height="30" ng-src="/uploads/{{comment.file_url}}"></a>
+                {{comment.body}}
+
+            </li>
+        </ul>
+    </div>
+    <!--add comments-->
+    <div class="row">&nbsp</div>
+    <form class="form-horizontal">
+        <input type="text" ng-model="formCommentText" ng-model-instant>
+        <button class="btn" ng-click="addComment()">Add comment</button>
+    </form>
 </section>

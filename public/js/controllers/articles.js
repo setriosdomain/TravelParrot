@@ -1,4 +1,4 @@
-angular.module('mean.articles').controller('ArticlesController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Articles', function ($scope, $upload, $routeParams, $location, Global, Articles) {
+angular.module('mean.articles').controller('ArticlesController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Articles','Users', function ($scope, $upload, $routeParams, $location, Global, Articles, Users) {
     $scope.global = Global;
 
     $scope.create = function() {
@@ -99,7 +99,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
             articleId: $routeParams.articleId
         }, function(article) {
             $scope.article = article;
-            $scope.file_url = article.file_url;
+            $scope.InitializeEventData();
         });
     };
 
@@ -142,5 +142,60 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
     $scope.showImage = function(article){
         if(!article){return false;}
         return article.file_url != '';
-    }
+    };
+    $scope.InitializeEventData = function(){
+        if(!$scope.article){return;}
+        $scope.file_url = $scope.article.file_url;
+        $scope.loadComments();
+    };
+    //comments
+    $scope.loadComments = function(){
+        if(!$scope.article.comments){
+            $scope.article.comments = [];
+        }
+        for(var i in $scope.article.comments){
+            $scope.fillPicture($scope.article.comments[i]);
+        }
+
+    };
+    $scope.fillPicture = function(comment){
+        if(!comment || !comment.user/*userId*/){return;}
+        Users.get({
+            userId: comment.user
+        }, function(user) {
+            if(!user){return;}
+            Global.safeApply($scope, function(){
+                comment.file_url = user.picture;
+            });
+        });
+    };
+    $scope.addComment = function(){
+        if(!$scope.article){return;}
+        if(!$scope.article.comments){
+            $scope.article.comments = [];
+        }
+        var newComment = {
+            body: $scope.formCommentText,
+            date: new Date(),
+            user: Global.user._id,
+            file_url: Global.user.picture
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/addArticleComment',
+            data: {
+                articleId: $scope.article._id,
+                comment: newComment
+            },
+            dataType: 'json',
+            success: function(data) {
+                Global.safeApply($scope, function(){
+                    $scope.article.comments.push(newComment);//for view purpose only
+                });
+            }
+        });
+    };
+
+    //comments
 }]);

@@ -78,7 +78,9 @@ module.exports = function(app, passport, auth) {
     app.get('/articles/:articleId', articles.show);
     app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
     app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
-    app.post('/queryArticles', articles.queryArticles);
+    app.post('/queryArticles', auth.requiresLogin, articles.queryArticles);
+    app.post('/addArticleComment', auth.requiresLogin, articles.addComment);
+
     //Finish with setting up the articleId param
     app.param('articleId', articles.article);
     //file uploads
@@ -92,7 +94,8 @@ module.exports = function(app, passport, auth) {
     app.get('/events/:eventId', events.show);
     app.put('/events/:eventId', auth.requiresLogin, auth.event.hasAuthorization, events.update);
     app.del('/events/:eventId', auth.requiresLogin, auth.event.hasAuthorization, events.destroy);
-    app.post('/queryEvents', events.queryEvents);
+    app.post('/queryEvents', auth.requiresLogin, events.queryEvents);
+    app.post('/addEventComment', auth.requiresLogin, events.addComment);
     //Finish with setting up the articleId param
     app.param('eventId', events.event);
     app.get('/uploads/', function(){});//ignore request

@@ -44,7 +44,9 @@ var EventSchema = new Schema({
                  user: {
                         type: Schema.ObjectId,
                         ref: 'User'
-                }}]
+                 },
+                 file_url: String
+    }]
 });
 
 /**

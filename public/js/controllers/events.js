@@ -1,4 +1,4 @@
-angular.module('mean.events').controller('EventsController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Events', '$timeout', function ($scope, $upload, $routeParams, $location, Global, Events, $timeout) {
+angular.module('mean.events').controller('EventsController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Events', '$timeout','Users', function ($scope, $upload, $routeParams, $location, Global, Events, $timeout, Users) {
     $scope.global = Global;
 
     $scope.create = function() {
@@ -500,5 +500,57 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         $scope.GoogleMaps.createMapForEdit();
         $scope.DatePicker.initializeDatesFromEvent();
         $scope.file_url = $scope.event.file_url;
+        $scope.loadComments();
     }
+    //comments
+    $scope.loadComments = function(){
+
+        if(!$scope.event.comments){
+            $scope.event.comments = [];
+        }
+        for(var i in $scope.event.comments){
+            $scope.fillPicture($scope.event.comments[i]);
+        }
+
+    };
+    $scope.fillPicture = function(comment){
+        if(!comment || !comment.user/*userId*/){return;}
+        Users.get({
+            userId: comment.user
+        }, function(user) {
+            if(!user){return;}
+            Global.safeApply($scope, function(){
+                comment.file_url = user.picture;
+            });
+        });
+    };
+    $scope.addComment = function(){
+        if(!$scope.event){return;}
+        if(!$scope.event.comments){
+            $scope.event.comments = [];
+        }
+        var newComment = {
+            body: $scope.formCommentText,
+            date: new Date(),
+            user: Global.user._id,
+            file_url: Global.user.picture
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/addEventComment',
+            data: {
+                eventId: $scope.event._id,
+                comment: newComment
+            },
+            dataType: 'json',
+            success: function(data) {
+                Global.safeApply($scope, function(){
+                    $scope.event.comments.push(newComment);//for view purpose only
+                });
+            }
+        });
+    };
+    //comments
+
 }]);

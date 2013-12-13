@@ -32,7 +32,15 @@ var ArticleSchema = new Schema({
     user: {
         type: Schema.ObjectId,
         ref: 'User'
-    }
+    },
+    comments: [{ body: String,
+        date: Date,
+        user: {
+            type: Schema.ObjectId,
+            ref: 'User'
+        },
+        file_url: String
+    }]
 });
 
 /**

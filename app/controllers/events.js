@@ -41,6 +41,29 @@ exports.create = function(req, res) {
     });
 };
 /**
+ * Add an event comment.
+ */
+exports.addComment = function(req, res) {
+    if(!req.body.eventId || !req.body.comment){return;}
+
+
+    Event.load(req.body.eventId, function(err, orgEvent) {
+        if (err) return next(err);
+        if (!orgEvent) return next(new Error('Failed to load event ' + req.body.eventId));
+        if(!orgEvent.comments){
+            orgEvent.comments = [];
+        }
+        orgEvent.comments.push(req.body.comment);
+
+        orgEvent.save(function(err) {
+            res.jsonp(orgEvent);
+        });
+
+    });
+};
+
+
+/**
  * Update an event
  */
 exports.update = function(req, res) {
