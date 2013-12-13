@@ -1,5 +1,5 @@
 <section>
-    <!-- Start: MAIN CONTENT -->
+    <!-- Start: STATIC MAIN CONTENT -->
     <div class="content">
         <!-- Start: slider -->
         <div data-ng-show="!global.user">
@@ -20,8 +20,7 @@
             </carousel>
             <!-- End: slider -->
         </div>
-
-        <!-- End: MAIN CONTENT -->
+        <!-- End: STATIC MAIN CONTENT -->
         <!--logged in content-->
         <div data-ng-show="!!global.user">
             <div class="row">
@@ -33,13 +32,13 @@
                     <div data-ng-show="global.user.email">{{global.user.email}}</div>
                 </div>
             </div>
-            <div class="row">
+            <div data-ng-show="!userRecentEvents || userRecentEvents.length" class="row">
                 <h1>Events <small>your recent events</small></h1>
                 <div class="row">&nbsp</div>
             </div>
             <div class="row">
                 <div class="span3">
-                    <h3>
+                    <h3 data-ng-show="!userRecentEvents || userRecentEvents.length">
                         <a href="#!/events/create">Create new event</a><br>
                     </h3>
                     <form class="form-search">
@@ -49,73 +48,35 @@
                         </div>
                     </form>
                     <h5>Recent events</h5>
-                    <h4>
-                        <a href="post.html">Link to recent event1</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="ost.html">Link to recent event2</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="post.html">Link to recent event3</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="post.html">Link to recent event4</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="post.html">Link to recent event5</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
+                    <div data-ng-repeat="recentEvent in recentEvents">
+                        <h4>
+                            <a ng-href="#!/events/{{recentEvent._id}}">{{recentEvent.title}}</a><br>
+                            <small>{{recentEvent.user.name}} on {{recentEvent.created | date:'dd-MMM-yyyy'}}</small>
+                        </h4>
+                    </div>
                 </div>
-
-
-
                 <div class="row">
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
+                    <div data-ng-hide="!userRecentEvents || userRecentEvents.length">
+                        <h1 style="margin-top:200px;">No events yet. <br> Why don't you <a href="/#!/events/create">Create One</a>?</h1>
                     </div>
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
-                    </div>
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
-                    </div>
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
+
+                    <div data-ng-repeat="userRecentEvent in userRecentEvents">
+                        <div class="span3">
+                            <a data-ng-show="userRecentEvent.file_url" ng-href="#!/events/{{userRecentEvent._id}}"><img  width="100" height="50" ng-src="uploads/{{userRecentEvent.file_url}}" class="thumbnail bottom-space-less"></a>
+                            <a data-ng-show="!userRecentEvent.file_url" ng-href="#!/events/{{userRecentEvent._id}}"><img width="100" height="50" src="img/placeholder.png" class="thumbnail bottom-space-less"></a>
+                            <p>{{userRecentEvent.content | truncate:200}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">&nbsp</div>
             <div class="row">
-                <div class="row">
+                <div data-ng-show="!userRecentEvents || userRecentEvents.length" class="row">
                     <h1>Posts <small>your recent posts</small></h1>
                     <div class="row">&nbsp</div>
                 </div>
                 <div class="span3">
-                    <h3>
+                    <h3 data-ng-show="!userRecentEvents || userRecentEvents.length">
                         <a href="#!/articles/create">Create new post</a><br>
                     </h3>
                     <form class="form-search">
@@ -125,61 +86,24 @@
                         </div>
                     </form>
                     <h5>Recent posts</h5>
-                    <h4>
-                        <a href="post.html">Link to recent post1</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="post.html">Link to recent post2</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="post.html">Link to recent post3</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="post.html">Link to recent post4</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
-                    <h4>
-                        <a href="post.html">Link to recent post5</a><br>
-                        <small>username on October 2, 2012</small>
-                    </h4>
+                    <div data-ng-repeat="recentArticle in recentArticles">
+                        <h4>
+                            <a ng-href="#!/articles/{{recentArticle._id}}">{{recentArticle.title}}</a><br>
+                            <small>{{recentArticle.user.name}} on {{recentArticle.created | date:'dd-MMM-yyyy'}}</small>
+                        </h4>
+                    </div>
                 </div>
-
-
                 <div class="row">
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
+                    <div data-ng-hide="!userRecentEvents || userRecentEvents.length">
+                        <h1 style="margin-top:200px;" data-ng-hide="!userRecentArticles || userRecentArticles.length">No articles yet. <br> Why don't you <a href="/#!/articles/create">Create One</a>?</h1>
                     </div>
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
-                    </div>
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
-                    </div>
-                    <div class="span3">
-                        <a href="#"><img src="http://placehold.it/100x50" class="thumbnail bottom-space-less"></a>
-                        <p>
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry.
-                            Short famous news about you in industry.Short famous news about you in industry
-                        </p>
+
+                    <div data-ng-repeat="userRecentArticle in userRecentArticles">
+                        <div class="span3">
+                            <a data-ng-show="userRecentArticle.file_url" ng-href="#!/articles/{{userRecentArticle._id}}"><img  width="100" height="50" ng-src="uploads/{{userRecentArticle.file_url}}" class="thumbnail bottom-space-less"></a>
+                            <a data-ng-show="!userRecentArticle.file_url" ng-href="#!/articles/{{userRecentArticle._id}}"><img width="100" height="50" src="img/placeholder.png" class="thumbnail bottom-space-less"></a>
+                            <p>{{userRecentArticle.content | truncate:200}}</p>
+                        </div>
                     </div>
                 </div>
 

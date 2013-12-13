@@ -23,6 +23,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
     };
 
     $scope.getUserRecentEvents = function(){
+        if(!user){return;}
         $.ajax({
             type: 'POST',
             url: '/getUserRecentEvents',
@@ -32,13 +33,17 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             dataType: 'json',
             success: function(events) {
                 if(!events){return;}
-                $scope.userRecentEvents = events;
+                $scope.$apply(function(){
+                    $scope.userRecentEvents = events;
+                });
+
             }
         });
     };
     $scope.getUserRecentEvents();
 
     $scope.getUserRecentArticles = function(){
+        if(!user){return;}
         $.ajax({
             type: 'POST',
             url: '/getUserRecentArticles',
@@ -48,31 +53,41 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             dataType: 'json',
             success: function(articles) {
                 if(!articles){return;}
-                $scope.userRecentArticles = articles;
+                $scope.$apply(function(){
+                    $scope.userRecentArticles = articles;
+                });
+
             }
         });
     };
     $scope.getUserRecentArticles();
 
     $scope.getRecentEvents = function(){
+        if(!user){return;}
         $.ajax({
             url: '/getRecentEvents',
             success: function(events) {
 
                 if(!events){return;}
-                $scope.recentEvents = events;
+                $scope.$apply(function(){
+                    $scope.recentEvents = events;
+                });
+
             }
         });
     };
     $scope.getRecentEvents();
 
     $scope.getRecentArticles = function(){
+        if(!user){return;}
         $.ajax({
             url: '/getRecentArticles',
             success: function(articles) {
 
                 if(!articles){return;}
-                $scope.recentArticles = articles;
+                $scope.$apply(function(){
+                    $scope.recentArticles = articles;
+                });
             }
         });
     };
