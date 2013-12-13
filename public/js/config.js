@@ -45,6 +45,10 @@ window.app.config(['$routeProvider',
                 controller: 'EventsController'
         }).
         //users
+        when('/users/:name/find', {
+                templateUrl: 'views/users/list.html',
+                controller: 'UsersController'
+        }).
         when('/users', {
                 templateUrl: 'views/users/list.html',
                 controller: 'UsersController'

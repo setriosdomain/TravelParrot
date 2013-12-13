@@ -1,4 +1,4 @@
-angular.module('mean.users').controller('UsersController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Users','$http','SignoutService','EncryptPassswordService', function ($scope, $upload, $routeParams, $location, Global, Users, $http, SignoutService, EncryptPassswordService) {
+angular.module('mean.users').controller('UsersController', ['$scope', '$upload', '$routeParams', '$location' ,'Global','Users','$http','SignoutService', function ($scope, $upload, $routeParams, $location, Global, Users, $http, SignoutService) {
     $scope.global = Global;
 
 
@@ -21,14 +21,6 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
 
         });
 
-
-
-
-        //$http.get('/signout');
-        //$location.path("/signout");
-
-
-
     };
 
     $scope.update = function() {
@@ -47,12 +39,34 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
 
 
     $scope.find = function() {
-        Users.query(function(users) {
-            $scope.users = users;
-            //pager
-            $scope.confPagination.totalItems = $scope.users.length;
-            //pager
-        });
+        if(!$routeParams.name)
+        {
+            Users.query(function(users) {
+
+                $scope.users = users;
+                //pager
+                $scope.confPagination.totalItems = $scope.users.length;
+                //pager
+            });
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: '/queryUsers',
+                data: {
+                    name: $routeParams.name
+                },
+                dataType: 'json',
+                success: function(users) {
+                    $scope.$apply(function(){
+                        $scope.users = users;
+                        //pager
+                        $scope.confPagination.totalItems = $scope.users.length;
+                        //pager
+                    });
+                }
+            });
+
+        }
 
 
     };

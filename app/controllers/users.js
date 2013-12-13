@@ -213,3 +213,26 @@ exports.getEncPassword = function(req, res) {
     res.jsonp(user.encryptPassword(req.body.data));
 };
 
+/**
+ * queryUsers
+ */
+exports.queryUsers = function(req, res) {
+    if(!req.body.name){return;}
+    var lookup = req.body.name;
+    var regexp = new RegExp(lookup, 'i');
+
+
+    User.find({$or : [{'name' : regexp}, {'username': regexp},{'email': regexp}]}).
+        sort('-username').
+        exec(function(err, users) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(users);
+        }
+    });
+};
+
+

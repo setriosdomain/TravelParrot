@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('HeaderController', ['$scope', 'Global', function ($scope, Global) {
+angular.module('mean.system').controller('HeaderController', ['$scope', 'Global','$location', function ($scope, Global,$location) {
     $scope.global = Global;
 
     $scope.menu = [
@@ -33,4 +33,15 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
     ];
     
     $scope.isCollapsed = false;
+
+    $scope.userSearch = function(){
+
+        var input = $('#userSearchInput').val();
+        if(!input){
+            $location.url('/users/');
+            return;
+        }
+        $location.url('/users/'+input+'/find');
+
+    };
 }]);

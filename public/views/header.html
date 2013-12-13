@@ -21,9 +21,9 @@
     </ul>
     <ul class="nav pull-right" data-ng-show="global.authenticated">
         <li>
-            <form class="form-search offset-search-navbar">
+            <form class="form-search offset-search-navbar" data-ng-submit="userSearch()">
                 <div class="input-append">
-                    <input type="text" class="search-query" placeholder="search user">
+                    <input type="text" id="userSearchInput" class="search-query" placeholder="search user">
                     <button type="submit" class="btn">Search</button>
                 </div>
             </form>
