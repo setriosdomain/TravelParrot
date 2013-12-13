@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('IndexController', ['$scope', 'Global', function ($scope, Global) {
+angular.module('mean.system').controller('IndexController', ['$scope', 'Global','$location', function ($scope, Global,$location) {
     $scope.global = Global;
     var user = $scope.global.user;
     $scope.confCarousel ={};
@@ -94,6 +94,25 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
     $scope.getRecentArticles();
 
 
+    $scope.articleSearch = function(){
+        var input = $('#articleSearchInput').val();
+        if(!input){
+            $location.url('/articles');
+            return;
+        }
+        $location.url('/articles/'+$.trim(input)+'/find');
+
+    };
+    $scope.eventSearch = function(){
+        var input = $('#eventSearchInput').val();
+
+        if(!input){
+            $location.url('/events');
+            return;
+        }
+        $location.url('/events/'+$.trim(input)+'/find');
+
+    };
 
 
 }]);

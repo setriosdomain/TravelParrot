@@ -41,9 +41,9 @@
                     <h3 data-ng-show="!userRecentEvents || userRecentEvents.length">
                         <a href="#!/events/create">Create new event</a><br>
                     </h3>
-                    <form class="form-search">
+                    <form class="form-search" data-ng-submit="eventSearch()">
                         <div class="input-append">
-                            <input type="text" class="span2 search-query" placeholder="Search events">
+                            <input type="text" id="eventSearchInput" class="span2 search-query" placeholder="Search events">
                             <button type="submit" class="btn"><i class="icon-search"></i></button>
                         </div>
                     </form>
@@ -79,9 +79,9 @@
                     <h3 data-ng-show="!userRecentEvents || userRecentEvents.length">
                         <a href="#!/articles/create">Create new post</a><br>
                     </h3>
-                    <form class="form-search">
+                    <form class="form-search" data-ng-submit="articleSearch()">
                         <div class="input-append">
-                            <input type="text" class="span2 search-query" placeholder="Search posts">
+                            <input type="text" id="articleSearchInput" class="span2 search-query" placeholder="Search posts">
                             <button type="submit" class="btn"><i class="icon-search"></i></button>
                         </div>
                     </form>

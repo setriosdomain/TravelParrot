@@ -95,3 +95,25 @@ exports.all = function(req, res) {
         }
     });
 };
+
+/**
+ * queryEvents
+ */
+exports.queryEvents = function(req, res) {
+    if(!req.body.name){return;}
+    var lookup = req.body.name;
+    var regexp = new RegExp(lookup, 'i');
+
+
+    Event.find({$or : [{'title' : regexp}, {'content': regexp}]}).
+        sort('-created').
+        exec(function(err, events) {
+            if (err) {
+                res.render('error', {
+                    status: 500
+                });
+            } else {
+                res.jsonp(events);
+            }
+        });
+};

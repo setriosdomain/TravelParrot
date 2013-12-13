@@ -57,14 +57,31 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
 
     $scope.find = function() {
-        Events.query(function(events) {
-            $scope.events = events;
-            //pager
-            $scope.confPagination.totalItems = $scope.events.length;
-            //pager
-        });
-
-
+        if(!$routeParams.name){
+            Events.query(function(events) {
+                $scope.events = events;
+                //pager
+                $scope.confPagination.totalItems = $scope.events.length;
+                //pager
+            });
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: '/queryEvents',
+                data: {
+                    name: $routeParams.name
+                },
+                dataType: 'json',
+                success: function(events) {
+                    $scope.$apply(function(){
+                        $scope.events = events;
+                        //pager
+                        $scope.confPagination.totalItems = $scope.events.length;
+                        //pager
+                    });
+                }
+            });
+        }
     };
 
     $scope.findOne = function() {

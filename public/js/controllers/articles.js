@@ -67,14 +67,31 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
 
 
     $scope.find = function() {
-        Articles.query(function(articles) {
-            $scope.articles = articles;
-            //pager
-            $scope.confPagination.totalItems = $scope.articles.length;
-            //pager
-        });
-
-
+        if(!$routeParams.name){
+            Articles.query(function(articles) {
+                $scope.articles = articles;
+                //pager
+                $scope.confPagination.totalItems = $scope.articles.length;
+                //pager
+            });
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: '/queryArticles',
+                data: {
+                    name: $routeParams.name
+                },
+                dataType: 'json',
+                success: function(articles) {
+                    $scope.$apply(function(){
+                        $scope.articles = articles;
+                        //pager
+                        $scope.confPagination.totalItems = $scope.articles.length;
+                        //pager
+                    });
+                }
+            });
+        }
     };
 
     $scope.findOne = function() {

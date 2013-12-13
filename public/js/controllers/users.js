@@ -65,10 +65,7 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
                     });
                 }
             });
-
         }
-
-
     };
 
     $scope.findOne = function() {

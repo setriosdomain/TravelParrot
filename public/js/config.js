@@ -3,6 +3,10 @@ window.app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
         //articles
+        when('/articles/:name/find', {
+                templateUrl: 'views/articles/list.html',
+                controller: 'ArticlesController'
+        }).
         when('/articles', {
             templateUrl: 'views/articles/list.html',
             controller: 'ArticlesController'
@@ -24,6 +28,10 @@ window.app.config(['$routeProvider',
             controller: 'ArticlesController'
         }).
         //events
+        when('/events/:name/find', {
+                templateUrl: 'views/events/list.html',
+                controller: 'EventsController'
+        }).
         when('/events', {
                 templateUrl: 'views/events/list.html',
                 controller: 'EventsController'

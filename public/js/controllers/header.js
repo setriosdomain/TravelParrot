@@ -41,7 +41,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
             $location.url('/users/');
             return;
         }
-        $location.url('/users/'+input+'/find');
+        $location.url('/users/'+$.trim(input)+'/find');
 
     };
 }]);
