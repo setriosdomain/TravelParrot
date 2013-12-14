@@ -59,7 +59,12 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
         }
         article.updated.push(new Date().getTime());
         article.file_url = $scope.file_url;
-
+        article.comments.length = 0;
+        for(var index =0; index < $scope.editModeComments.length; index++){
+            if($scope.editModeComments[index]){
+                article.comments.push($scope.editModeComments[index]);
+            }
+        }
         article.$update(function() {
             $location.path('articles/' + article._id);
         });
@@ -156,6 +161,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
         for(var i in $scope.article.comments){
             $scope.fillPicture($scope.article.comments[i]);
         }
+        $scope.editModeComments = $scope.article.comments.slice();//shallow copy
 
     };
     $scope.fillPicture = function(comment){
@@ -165,7 +171,12 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
         }, function(user) {
             if(!user){return;}
             Global.safeApply($scope, function(){
-                comment.file_url = user.picture;
+                if(!user.picture || user.picture ==''){
+                    comment.file_url = "img/user_placeholder.png";
+                }
+                else{
+                    comment.file_url = "/uploads/"+user.picture;
+                }
             });
         });
     };
@@ -174,11 +185,18 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
         if(!$scope.article.comments){
             $scope.article.comments = [];
         }
+        var pictureFile = '';
+        if(!Global.user.picture || Global.user.picture ==''){
+            pictureFile = "img/user_placeholder.png";
+        }
+        else{
+            pictureFile = "/uploads/"+Global.user.picture;
+        }
         var newComment = {
             body: $scope.formCommentText,
             date: new Date(),
             user: Global.user._id,
-            file_url: Global.user.picture
+            file_url: pictureFile
         };
 
         $.ajax({
@@ -195,6 +213,11 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$up
                 });
             }
         });
+
+        $scope.formCommentText = '';
+    };
+    $scope.removeComment = function(index){
+        delete $scope.editModeComments[index];
     };
 
     //comments

@@ -27,8 +27,7 @@
             <h4>Comments</h4>
             <ul class="unstyled">
                 <li ng-repeat="comment in event.comments">
-
-                    <a ng-href="/#!/users/{{comment.user}}"><img width="60" height="30" ng-src="/uploads/{{comment.file_url}}"></a>
+                    <a ng-href="/#!/users/{{comment.user}}"><img width="60" height="30" ng-src="{{comment.file_url}}"></a>
                     {{comment.body}}
 
                 </li>

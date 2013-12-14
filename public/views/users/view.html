@@ -2,6 +2,7 @@
     <div class="controls">
         <div data-ng-show="user.name"><h3>Name</h3>{{user.name}}</div>
         <img ng-show="showImage(user)" width="158" height="75" ng-src="/uploads/{{user.picture}}">
+        <img ng-hide="showImage(user)" width="158" height="75" src="img/user_placeholder.png">
         <div data-ng-show="user.email"><h3>Email</h3>{{user.email}}</div>
         <div data-ng-show="user.username"><h3>Username</h3>{{user.username}}</div>
         <h2>

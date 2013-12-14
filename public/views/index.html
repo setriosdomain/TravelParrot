@@ -28,6 +28,7 @@
                     <div data-ng-show="global.user.name"><h4>{{global.user.name}}</h4></div>
                     <div class="row">&nbsp</div>
                     <img ng-show="global.user.picture != ''" width="158" height="75" ng-src="/uploads/{{global.user.picture}}">
+                    <img ng-show="!global.user.picture" width="158" height="75" src="img/user_placeholder.png">
                     <div class="row">&nbsp</div>
                     <div data-ng-show="global.user.email">{{global.user.email}}</div>
                 </div>

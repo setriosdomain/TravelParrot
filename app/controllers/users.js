@@ -89,7 +89,7 @@ exports.update = function(req, res) {
     user = _.extend(user, req.body);
 
     //if changed password
-    if(user.hashed_password_confirm != ''){
+    if(typeof user.hashed_password_confirm != 'undefined'){
 
         User
             .findOne({

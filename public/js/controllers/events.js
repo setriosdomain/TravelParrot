@@ -49,6 +49,12 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         event.periodFrom = $scope.DatePicker.dateFrom;
         event.periodTo = $scope.DatePicker.dateTo;
         event.destinations = $scope.GoogleMaps.getFormaterMarkers();
+        event.comments.length = 0;
+        for(var index =0; index < $scope.editModeComments.length; index++){
+            if($scope.editModeComments[index]){
+                event.comments.push($scope.editModeComments[index]);
+            }
+        }
 
         event.$update(function() {
             $location.path('events/' + event._id);
@@ -511,6 +517,10 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         for(var i in $scope.event.comments){
             $scope.fillPicture($scope.event.comments[i]);
         }
+        if(!$('#map_canvas_edit')[0]/*dom elem*/){return;}
+        //we are on edit mode
+        $scope.editModeComments = $scope.event.comments.slice();//shallow copy
+
 
     };
     $scope.fillPicture = function(comment){
@@ -520,7 +530,12 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         }, function(user) {
             if(!user){return;}
             Global.safeApply($scope, function(){
-                comment.file_url = user.picture;
+                if(!user.picture || user.picture ==''){
+                    comment.file_url = "img/user_placeholder.png";
+                }
+                else{
+                    comment.file_url = "/uploads/"+user.picture;
+                }
             });
         });
     };
@@ -529,11 +544,18 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         if(!$scope.event.comments){
             $scope.event.comments = [];
         }
+        var pictureFile = '';
+        if(!Global.user.picture || Global.user.picture ==''){
+            pictureFile = "img/user_placeholder.png";
+        }
+        else{
+            pictureFile = "/uploads/"+Global.user.picture;
+        }
         var newComment = {
             body: $scope.formCommentText,
             date: new Date(),
             user: Global.user._id,
-            file_url: Global.user.picture
+            file_url: pictureFile
         };
 
         $.ajax({
@@ -550,6 +572,11 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
                 });
             }
         });
+
+        $scope.formCommentText = '';
+    };
+    $scope.removeComment = function(index){
+        delete $scope.editModeComments[index];
     };
     //comments
 

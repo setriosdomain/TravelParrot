@@ -10,6 +10,7 @@
                     <div class="span9">
                         <h4><a data-ng-href="#!/users/{{user._id}}">{{user.name}}</a></h4>
                         <img ng-show="showImage(user.picture)" width="158" height="75" ng-src="/uploads/{{user.picture}}">
+                        <img ng-hide="showImage(user.picture)" width="158" height="75" src="/img/user_placeholder.png">
                     </div>
             </div>
 		</li>

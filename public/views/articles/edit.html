@@ -34,6 +34,20 @@
 				</textarea>
 			</div>
 		</div>
+        <!--comments-->
+        <div ng-show="editModeComments && editModeComments.length">
+            <div class="controls">
+                <h4>Comments</h4>
+                <ul class="unstyled">
+                    <li ng-repeat="comment in editModeComments">
+                        <button ng-show="comment" type="button" ng-click="removeComment($index)" class="btn">remove</button>
+                        <a ng-href="/#!/users/{{comment.user}}"><img width="60" height="30" ng-src="{{comment.file_url}}"></a>
+                        {{comment.body}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--comments-->
 		<div class="controls">
             <button  type="submit" class="btn btn-primary">Update</button>
             <!--<div class="controls">-->

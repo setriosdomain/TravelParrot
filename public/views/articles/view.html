@@ -12,7 +12,7 @@
         <ul class="unstyled">
             <li ng-repeat="comment in article.comments">
 
-                <a ng-href="/#!/users/{{comment.user}}"><img width="60" height="30" ng-src="/uploads/{{comment.file_url}}"></a>
+                <a ng-href="/#!/users/{{comment.user}}"><img width="60" height="30" ng-src="{{comment.file_url}}"></a>
                 {{comment.body}}
 
             </li>
