@@ -56,6 +56,10 @@ window.app.config(['$routeProvider',
         when('/users/:name/find', {
                 templateUrl: 'views/users/list.html',
                 controller: 'UsersController'
+            }).
+        when('/users/:userId/nearby', {
+                templateUrl: 'views/users/nearby.html',
+                controller: 'UsersController'
         }).
         when('/users', {
                 templateUrl: 'views/users/list.html',

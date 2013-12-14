@@ -89,7 +89,8 @@ exports.update = function(req, res) {
     user = _.extend(user, req.body);
 
     //if changed password
-    if(typeof user.hashed_password_confirm != 'undefined'){
+    if(typeof user.hashed_password_confirm != 'undefined' &&
+        user.hashed_password_confirm != ''){
 
         User
             .findOne({
@@ -234,5 +235,79 @@ exports.queryUsers = function(req, res) {
         }
     });
 };
+/**
+ * get users nearby.
+ */
+exports.getUsersNearby = function(req, res) {
+    if(!req.body.userId){return;}
+    if(!req.body.maxDistance){
+        req.body.maxDistance = 1000;//meters
+    }
+
+
+    User
+        .findOne({
+            _id: req.body.userId
+        })
+        .exec(function(err, user) {
+            if (err) return next(err);
+            if (!user) return next(new Error('Failed to load User ' + req.body.userId));
+            if(!user.currentLocation)return next(new Error('User does not have currentLocation set cannot get people nearby: ' + user._id));
+
+            var fromLatitude = user.currentLocation.latitude;
+            var fromLongitude = user.currentLocation.longitude;
+
+
+
+            User.find({currentLocation: {$ne: null}}).sort('-username').exec(function(err, users) {
+                if (err) {
+                    res.render('error', {
+                        status: 500
+                    });
+                } else {
+
+                    var nearbyUsers = [];
+                    for(var i=0;i < users.length;i++){
+                        if(!users[i].currentLocation){continue;}
+                        if(users[i]._id == req.body.userId) {continue;}
+                        var toLatitude = users[i].currentLocation.latitude;
+                        var toLongitude = users[i].currentLocation.longitude;
+
+                        if(!toLongitude || !toLatitude){continue;}
+                        var distanceToUser =geoMeasurement(fromLatitude,fromLongitude,
+                                            toLatitude,toLongitude);
+                        if(distanceToUser < req.body.maxDistance){
+                            users[i].currentLocation.distanceToOtherUser = distanceToUser;
+                            nearbyUsers.push(users[i]);
+                        }
+
+                    }
+
+                    res.jsonp(nearbyUsers);
+                }
+            });
+        });
+
+
+
+
+
+
+
+};
+
+
+function geoMeasurement(lat1, lon1, lat2, lon2){
+    var R = 6378.137; // Radius of earth in KM
+    var dLat = (lat2 - lat1) * Math.PI / 180;
+    var dLon = (lon2 - lon1) * Math.PI / 180;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    return d * 1000; // meters
+}
+
 
 

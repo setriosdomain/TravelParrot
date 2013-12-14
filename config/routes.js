@@ -24,8 +24,10 @@ module.exports = function(app, passport, auth) {
     app.get('/users/:userId', users.show);
 
     //$ ajax calls
-    app.post('/enc', users.getEncPassword);
-    app.post('/queryUsers', users.queryUsers);
+    app.post('/enc',auth.requiresLogin, users.getEncPassword);
+    app.post('/queryUsers',auth.requiresLogin, users.queryUsers);
+    app.post('/getUsersNearby',auth.requiresLogin, users.getUsersNearby);
+
 
     //Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {

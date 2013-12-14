@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('IndexController', ['$scope', 'Global','$location', function ($scope, Global,$location) {
+angular.module('mean.system').controller('IndexController', ['$scope', 'Global','$location','Users', function ($scope, Global,$location,Users) {
     $scope.global = Global;
     var user = $scope.global.user;
     $scope.confCarousel ={};
@@ -33,7 +33,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             dataType: 'json',
             success: function(events) {
                 if(!events){return;}
-                $scope.$apply(function(){
+                Global.safeApply($scope, function(){
                     $scope.userRecentEvents = events;
                 });
 
@@ -53,7 +53,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             dataType: 'json',
             success: function(articles) {
                 if(!articles){return;}
-                $scope.$apply(function(){
+                Global.safeApply($scope, function(){
                     $scope.userRecentArticles = articles;
                 });
 
@@ -69,7 +69,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             success: function(events) {
 
                 if(!events){return;}
-                $scope.$apply(function(){
+                Global.safeApply($scope, function(){
                     $scope.recentEvents = events;
                 });
 
@@ -85,7 +85,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             success: function(articles) {
 
                 if(!articles){return;}
-                $scope.$apply(function(){
+                Global.safeApply($scope, function(){
                     $scope.recentArticles = articles;
                 });
             }
@@ -111,6 +111,30 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             return;
         }
         $location.url('/events/'+$.trim(input)+'/find');
+
+    };
+    $scope.findUsersNearby = function(){
+        Users.get({
+            userId: $scope.global.user._id
+        }, function(userObj) {
+
+            Global.getCurrentLocation(function(position){
+                //position.coords.latitude, position.coords.longitude
+
+                userObj.currentLocation={latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    date: new Date()};
+                userObj.$update(function() {
+                    $location.url('/users/'+user._id+'/nearby');
+                });
+
+        });
+
+
+
+
+
+        });
 
     };
 

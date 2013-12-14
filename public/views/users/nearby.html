@@ -1,0 +1,30 @@
+<section data-ng-init="findNearby()">
+
+	<ul class="events unstyled">
+        <div>
+            <h2>Users</h2>
+        </div>
+        <li data-ng-repeat="user in users | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
+            <div class="row page-header bottom-space">
+
+                    <div class="span9">
+                        <h4><a data-ng-href="#!/users/{{user._id}}">{{user.name}}</a></h4>
+                        <img ng-show="showImage(user.picture)" width="158" height="75" ng-src="/uploads/{{user.picture}}">
+                        <img ng-hide="showImage(user.picture)" width="158" height="75" src="/img/user_placeholder.png">
+                        <h4>Was : {{user.currentLocation.distanceToOtherUser | number: 2}} meters from you on {{user.currentLocation.date |  date:'medium'}}</h4>
+                    </div>
+            </div>
+		</li>
+	</ul>
+
+    <div data-ng-show="!users || users.length > 10" class="well well-small">
+        <pagination total-items="confPagination.totalItems"
+                    page="confPagination.currentPage"
+                    max-size="confPagination.maxSize"
+                    class="pagination"
+                    boundary-links= confPagination.boundaryLinks>
+        </pagination>
+    </div>
+
+
+</section>

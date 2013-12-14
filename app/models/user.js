@@ -21,6 +21,10 @@ var UserSchema = new Schema({
         type: String,
         unique: true
     },*/
+    currentLocation:{latitude: Number,
+        longitude: Number,
+        date: Date,
+        distanceToOtherUser: Number},
     provider: String,
     hashed_password: String,
     salt: String,

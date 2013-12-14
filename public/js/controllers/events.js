@@ -281,47 +281,19 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         $scope.GoogleMaps.markers = [];
     }
     $scope.GoogleMaps.getCurrentLocation = function () {
-        var onError = function(error) {
-            alert("Could not get the current location.");
-        };
-
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-
-                    // once we get here, we receive the position in the variable "position"
-                    // we use it to create a LatLng object (see documentation) for later usage
-                    var currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude, false);
-
-                    // now that we have the current location, we need use the Map API to move the map to this location
-                    // you may also want to adjust the zoom level
-
-                    // remember that the map object was already initialised for you in createMap()
-                    // you can use it like this: map.whateverFunction()
-
-                    // see the API reference for the relevant functions (you need to set the location, and set the zoom level):
-                    // https://developers.google.com/maps/documentation/javascript/reference#Map
-                    var coords ={latLng : currentLocation};
-                    $scope.GoogleMaps.createMarker(coords);
-                    $scope.GoogleMaps.map.setCenter(currentLocation);
-                    $scope.GoogleMaps.map.setZoom(15);
-
-
-                    //map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude, false));
-
-
-                    // also fix this string so that it display the coordinates of the current location
-                    //var output = "Your current position is: ("+ position.coords.latitude + "," +
-                    //    position.coords.longitude+")";
-                    //document.getElementById("currentPosition").innerHTML = output;
-
-                },
-                onError
-            );
-        }else{
-            onError();
-        }
-    }
+        Global.getCurrentLocation(
+            function(position) {
+                var currentLocation =  new google.maps.LatLng(position.coords.latitude, position.coords.longitude, false);
+                // see the API reference for the relevant functions.
+                // https://developers.google.com/maps/documentation/javascript/reference#Map
+                var coords ={latLng : currentLocation};
+                $scope.GoogleMaps.createMarker(coords);
+                $scope.GoogleMaps.map.setCenter(currentLocation);
+                $scope.GoogleMaps.map.setZoom(15);
+                return position;
+            }
+        );
+    };
     $scope.GoogleMaps.getFormaterMarkers = function(){
 
         var data = $scope.GoogleMaps.markers;

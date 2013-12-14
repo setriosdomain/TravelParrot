@@ -24,14 +24,22 @@
         <!--logged in content-->
         <div data-ng-show="!!global.user">
             <div class="row">
+
                 <div class="center-align">
+
                     <div data-ng-show="global.user.name"><h4>{{global.user.name}}</h4></div>
                     <div class="row">&nbsp</div>
                     <img ng-show="global.user.picture != ''" width="158" height="75" ng-src="/uploads/{{global.user.picture}}">
                     <img ng-show="!global.user.picture" width="158" height="75" src="img/user_placeholder.png">
                     <div class="row">&nbsp</div>
                     <div data-ng-show="global.user.email">{{global.user.email}}</div>
+                    <form class="form-search" data-ng-submit="findUsersNearby()">
+                        <button class="btn" type="btn" >
+                            <img  width="25" height="12" src="img/geolocation.png"> Find users nearby
+                        </button>
+                    </form>
                 </div>
+
             </div>
             <div data-ng-show="!userRecentEvents || userRecentEvents.length" class="row">
                 <h1>Events <small>your recent events</small></h1>

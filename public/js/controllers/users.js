@@ -57,7 +57,8 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
                 },
                 dataType: 'json',
                 success: function(users) {
-                    $scope.$apply(function(){
+                    //$scope.$apply(function(){
+                    Global.safeApply($scope, function(){
                         $scope.users = users;
                         //pager
                         $scope.confPagination.totalItems = $scope.users.length;
@@ -173,5 +174,29 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
                 }
             });
 
-    }
+    };
+    $scope.findNearby = function(){
+        if(!$routeParams.userId){return;}
+        //maxDistance in meters
+        $.ajax({
+            type: 'POST',
+            url: '/getUsersNearby/',
+            data: {
+                userId: $routeParams.userId,
+                maxDistance: 1000
+            },
+            dataType: 'json',
+            success: function(users) {
+
+                if(!users){return;}
+                Global.safeApply($scope, function(){
+                    $scope.users = users;
+                    //pager
+                    $scope.confPagination.totalItems = $scope.users.length;
+                    //pager
+                });
+
+            }
+        });
+    };
 }]);
