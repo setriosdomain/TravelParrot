@@ -71,6 +71,7 @@
 
                     <div data-ng-repeat="userRecentEvent in userRecentEvents">
                         <div class="span3">
+                            <a ng-href="#!/events/{{userRecentEvent._id}}"><h5><p>{{userRecentEvent.title | truncate:42}}</p></h5></a>
                             <a data-ng-show="userRecentEvent.file_url" ng-href="#!/events/{{userRecentEvent._id}}"><img  width="100" height="50" ng-src="uploads/{{userRecentEvent.file_url}}" class="thumbnail bottom-space-less"></a>
                             <a data-ng-show="!userRecentEvent.file_url" ng-href="#!/events/{{userRecentEvent._id}}"><img width="100" height="50" src="img/placeholder.png" class="thumbnail bottom-space-less"></a>
                             <p>{{userRecentEvent.content | truncate:200}}</p>
@@ -109,6 +110,7 @@
 
                     <div data-ng-repeat="userRecentArticle in userRecentArticles">
                         <div class="span3">
+                            <a ng-href="#!/articles/{{userRecentArticle._id}}"><h5><p>{{userRecentArticle.title | truncate:42}}</p></h5></a>
                             <a data-ng-show="userRecentArticle.file_url" ng-href="#!/articles/{{userRecentArticle._id}}"><img  width="100" height="50" ng-src="uploads/{{userRecentArticle.file_url}}" class="thumbnail bottom-space-less"></a>
                             <a data-ng-show="!userRecentArticle.file_url" ng-href="#!/articles/{{userRecentArticle._id}}"><img width="100" height="50" src="img/placeholder.png" class="thumbnail bottom-space-less"></a>
                             <p>{{userRecentArticle.content | truncate:200}}</p>
