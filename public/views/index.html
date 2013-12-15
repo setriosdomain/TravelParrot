@@ -23,7 +23,7 @@
         <!-- End: STATIC MAIN CONTENT -->
         <!--logged in content-->
         <div data-ng-show="!!global.user">
-            <div class="row">
+            <div class="row-fluid">
 
                 <div class="center-align">
 
@@ -43,10 +43,9 @@
             </div>
             <div data-ng-show="!userRecentEvents || userRecentEvents.length" class="row">
                 <h1>Events <small>your recent events</small></h1>
-                <div class="row">&nbsp</div>
             </div>
             <div class="row">
-                <div class="span3">
+                <div class="pull-left span3">
                     <h3 data-ng-show="!userRecentEvents || userRecentEvents.length">
                         <a href="#!/events/create">Create new event</a><br>
                     </h3>
@@ -59,19 +58,18 @@
                     <h5>Recent events</h5>
                     <div data-ng-repeat="recentEvent in recentEvents">
                         <h4>
-                            <a ng-href="#!/events/{{recentEvent._id}}">{{recentEvent.title}}</a><br>
+                            <a ng-href="#!/events/{{recentEvent._id}}">{{recentEvent.title | truncate:50}}</a><br>
                             <small>{{recentEvent.user.name}} on {{recentEvent.created | date:'dd-MMM-yyyy'}}</small>
                         </h4>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row-fluid">
                     <div data-ng-hide="!userRecentEvents || userRecentEvents.length">
                         <h1 style="margin-top:200px;">No events yet. <br> Why don't you <a href="/#!/events/create">Create One</a>?</h1>
                     </div>
-
                     <div data-ng-repeat="userRecentEvent in userRecentEvents">
                         <div class="span3">
-                            <a ng-href="#!/events/{{userRecentEvent._id}}"><h5><p>{{userRecentEvent.title | truncate:42}}</p></h5></a>
+                            <a ng-href="#!/events/{{userRecentEvent._id}}"><h5><p>{{userRecentEvent.title | truncate:38}}</p></h5></a>
                             <a data-ng-show="userRecentEvent.file_url" ng-href="#!/events/{{userRecentEvent._id}}"><img  width="100" height="50" ng-src="uploads/{{userRecentEvent.file_url}}" class="thumbnail bottom-space-less"></a>
                             <a data-ng-show="!userRecentEvent.file_url" ng-href="#!/events/{{userRecentEvent._id}}"><img width="100" height="50" src="img/placeholder.png" class="thumbnail bottom-space-less"></a>
                             <p>{{userRecentEvent.content | truncate:200}}</p>
@@ -83,7 +81,6 @@
             <div class="row">
                 <div data-ng-show="!userRecentEvents || userRecentEvents.length" class="row">
                     <h1>Posts <small>your recent posts</small></h1>
-                    <div class="row">&nbsp</div>
                 </div>
                 <div class="span3">
                     <h3 data-ng-show="!userRecentEvents || userRecentEvents.length">
@@ -98,19 +95,19 @@
                     <h5>Recent posts</h5>
                     <div data-ng-repeat="recentArticle in recentArticles">
                         <h4>
-                            <a ng-href="#!/articles/{{recentArticle._id}}">{{recentArticle.title}}</a><br>
+                            <a ng-href="#!/articles/{{recentArticle._id}}">{{recentArticle.title | truncate:50}}</a><br>
                             <small>{{recentArticle.user.name}} on {{recentArticle.created | date:'dd-MMM-yyyy'}}</small>
                         </h4>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row-fuid">
                     <div data-ng-hide="!userRecentEvents || userRecentEvents.length">
                         <h1 style="margin-top:200px;" data-ng-hide="!userRecentArticles || userRecentArticles.length">No articles yet. <br> Why don't you <a href="/#!/articles/create">Create One</a>?</h1>
                     </div>
 
                     <div data-ng-repeat="userRecentArticle in userRecentArticles">
                         <div class="span3">
-                            <a ng-href="#!/articles/{{userRecentArticle._id}}"><h5><p>{{userRecentArticle.title | truncate:42}}</p></h5></a>
+                            <a ng-href="#!/articles/{{userRecentArticle._id}}"><h5><p>{{userRecentArticle.title | truncate:38}}</p></h5></a>
                             <a data-ng-show="userRecentArticle.file_url" ng-href="#!/articles/{{userRecentArticle._id}}"><img  width="100" height="50" ng-src="uploads/{{userRecentArticle.file_url}}" class="thumbnail bottom-space-less"></a>
                             <a data-ng-show="!userRecentArticle.file_url" ng-href="#!/articles/{{userRecentArticle._id}}"><img width="100" height="50" src="img/placeholder.png" class="thumbnail bottom-space-less"></a>
                             <p>{{userRecentArticle.content | truncate:200}}</p>
