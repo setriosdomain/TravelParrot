@@ -2,76 +2,7 @@
 footer
    .container
         .row
-            .span2
-                h4
-                    i.icon-star.icon-white
-                    | Products
-                nav
-                    ul.quick-links
-                        li
-                            a(href='product.html') Product1
-                        li
-                            a(href='product.html') Product2
-                        li
-                            a(href='product.html') Product3
-                        li
-                            a(href='all_products.html') All products
-                h4
-                    i.icon-cogs.icon-white
-                    | Services
-                nav
-                    ul.quick-links
-                        li
-                            a(href='service.html') Service1
-                        li
-                            a(href='service.html') Service2
-                        li
-                            a(href='service.html') Service3
-                        li
-                            a(href='all_services.html') All services
-            .span2
-                h4
-                    i.icon-beaker.icon-white
-                    | About
-                nav
-                    ul.quick-links
-                        li
-                            a(href='our_works.html') Our works
-                        li
-                            a(href='patnerships.html') Patnerships
-                        li
-                            a(href='leadership.html') Leadership
-                        li
-                            a(href='news.html') News
-                        li
-                            a(href='events.html') Events
-                        li
-                            a(href='blog.html') Blog
-                        ul
-            .span2
-                h4
-                    i.icon-thumbs-up.icon-white
-                    | Support
-                nav
-                    ul.quick-links
-                        li
-                            a(href='faq.html') FAQ
-                        li
-                            a(href='contact_us.html') Contact us
-                h4
-                    i.icon-legal.icon-white
-                    | Legal
-                nav
-                    ul.quick-links
-                        li
-                            a(href='#') License
-                        li
-                            a(href='#') Terms of Use
-                        li
-                            a(href='#') Privacy Policy
-                        li
-                            a(href='#') Security
-            .span3
+            .span8
                 h4 Get in touch
                 .social-icons-row
                     a(href='#')
@@ -85,20 +16,21 @@ footer
                         i.icon-google-plus
                     a(href='#')
                         i.icon-github
-                    a(href='mailto:soundar.rathinasamy@gmail.com')
-                        i.icon-envelope
-                .social-icons-row
-                    i.icon-phone.icon-large.phone-number
-                    | +919750227877
+                    //a(href='mailto:setriothor@gmail.com')
+                    //    i.icon-envelope
+                //.social-icons-row
+                //    i.icon-phone.icon-large.phone-number
+                    | +919650117977
             .span3
-                h4 Get updated by email
-                form
-                    input(type='text', name='email', placeholder='Email address')
-                    input.btn.btn-primary(type='submit', value='Subscribe')
+                h4 Contact us by email
+                form(action='mailto:admin@domain.com', method='GET')
+                    input(name='subject', type='text',placeholder="subject" )
+                    textarea(name='body',placeholder="body")
+                    input.btn.btn-primary(type='submit', value='Contact us')
     hr.footer-divider
     .container
         p
-            | © 2012-3000 Bootbusiness, Inc. All Rights Reserved.
+            | © 2012-3000 TravelParrot, Inc. All Rights Reserved.
    //JQuery
    //script(type='text/javascript', src='http://code.jquery.com/jquery-1.9.1.min.js')
    script(type='text/javascript', src='/lib/jquery/jquery-1.9.1.min.js')

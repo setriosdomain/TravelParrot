@@ -5,18 +5,18 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
     $scope.confCarousel.slides = [];
 
     $scope.confCarousel.slides.push({active: true,
-        title: 'TELL ABOUT YOUR BUSINESS AND CORPORATE.',
-        text:'We are Bootbusiness and we are awesome.We solve your technology problems by our awesome products.We are Bootbusiness and we are awesome.We solve your technology problems by our awesome products.',
-        image: '/../img/bootbusiness/placeholder.jpg'});
-    $scope.confCarousel.slides.push({title: 'TELL ABOUT YOUR NATURE OF WORK',
-        text:'We are Bootbusiness and we design ultimate website applications.We are Bootbusiness and we design ultimate website applications.',
-        image: '/../img/bootbusiness/placeholder.jpg'});
-    $scope.confCarousel.slides.push({title: 'TELL ABOUT YOUR PRODUCT',
-        text:'Get excited about our products.We build awesome products in mobile.We build awesome products in mobile.We build awesome products in mobile.',
-        image: '/../img/bootbusiness/placeholder.jpg'});
-    $scope.confCarousel.slides.push({title: 'TELL ABOUT YOUR ANOTHER PRODUCT',
-        text:'Get excited about our products.We build awesome products in mobile.We build awesome products in mobile.We build awesome products in mobile.',
-        image: '/../img/bootbusiness/placeholder.jpg'});
+        title: 'WELCOME TO TRAVEL PARROT',
+        text:'Connect with travelers all around the world. Meet visiting travelers & locals at events in your area, get travel tips, discuss your interests, and have fun!',
+        image: '/../img/carousel/1.jpg'});
+    $scope.confCarousel.slides.push({title: 'REDISCOVER YOUR CITY',
+        text:'There’s a community of just about enything you can think of. Many cities have weekly language exchanges, dance classes, hikes and dinners. Make new friends.',
+        image: '/../img/carousel/2.jpg'});
+    $scope.confCarousel.slides.push({title: 'JOIN AN EVENT',
+        text:'Join an event - Events around the UK including challenge walks, marathons, skydives, patomime, polo matches aerobics class and more.',
+        image: '/../img/carousel/3.jpg'});
+    $scope.confCarousel.slides.push({title: 'ABOUT US',
+        text:'We envision a world made better by travel and travel made richer by connection. Travelers share their lives with the people they encounter, fostering cultural exchange and mutual respect.',
+        image: '/../img/carousel/4.jpg'});
     $scope.confCarousel.interval = 10000;
     $scope.confCarousel.setActiveSlide = function(idx) {
         $scope.slides[idx].active=true;
@@ -103,6 +103,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
         $location.url('/articles/'+$.trim(input)+'/find');
 
     };
+
     $scope.eventSearch = function(){
         var input = $('#eventSearchInput').val();
 
@@ -113,6 +114,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
         $location.url('/events/'+$.trim(input)+'/find');
 
     };
+
     $scope.findUsersNearby = function(){
         Users.get({
             userId: $scope.global.user._id

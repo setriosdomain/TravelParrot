@@ -82,6 +82,9 @@ window.app.config(['$routeProvider',
                 controller: 'UsersController'
         }).
         //users
+        when('/faq/', {
+                templateUrl: 'views/faq.html'
+        }).
         //home
         when('/', {templateUrl: 'views/index.html',
                    controller: 'IndexController'
