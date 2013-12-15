@@ -21,7 +21,7 @@
 
                         <!--<img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">-->
                         <a data-ng-href="#!/events/{{event._id}}">
-                            <img ng-show="showImage(event)" width="315" height="150" ng-src="/uploads/{{event.file_url}}">
+                            <img class="thumbnail" ng-show="showImage(event)" width="315" height="150" ng-src="/uploads/{{event.file_url}}">
                         </a>
                         <p>
                             {{event.content}}

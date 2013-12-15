@@ -8,7 +8,7 @@
             <div ng-show="event.periodFrom">From: {{event.periodFrom | date:'medium'}}</div>
             <div ng-show="event.periodTo">To: {{event.periodTo | date:'medium'}}</div>
         </h5>
-        <img ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
+        <img class="thumbnail" ng-show="showImage(event)" width="630" height="300" ng-src="/uploads/{{event.file_url}}">
         <div class="row">&nbsp</div>
 
         <div>{{event.content}}</div>
