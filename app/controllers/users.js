@@ -282,18 +282,13 @@ exports.getUsersNearby = function(req, res) {
                         }
 
                     }
-
-                    res.jsonp(nearbyUsers);
+                    //order by distance
+                    res.jsonp(_.sortBy(nearbyUsers, function(usr){
+                        return usr.currentLocation.distanceToOtherUser
+                    }));
                 }
             });
         });
-
-
-
-
-
-
-
 };
 
 
