@@ -21,7 +21,7 @@ exports.getUserRecentEvents = function(req, res) {
     var user = req.user;
     Event.find({user: user._id}).sort('-created').
         populate('user', 'name username').
-        limit(6).
+        //limit(5).
         exec(function(err, events) {
             if (err) {
                 res.render('error', {
@@ -39,7 +39,7 @@ exports.getUserRecentArticles = function(req, res) {
     var user = req.user;
     Article.find({user: user._id}).sort('-created').
         populate('user', 'name username').
-        limit(6).
+        //limit(54).
         exec(function(err, articles) {
             if (err) {
                 res.render('error', {
@@ -57,7 +57,7 @@ exports.getUserRecentArticles = function(req, res) {
 exports.getRecentEvents = function(req, res) {
     Event.find().sort('-created').
         populate('user', 'name username').
-        limit(6).
+        limit(10).
         exec(function(err, events) {
             if (err) {
                 res.render('error', {
@@ -75,7 +75,7 @@ exports.getRecentEvents = function(req, res) {
 exports.getRecentArticles = function(req, res) {
     Article.find().sort('-created').
                    populate('user', 'name username').
-                   limit(6).
+                   limit(10).
                    exec(function(err, articles) {
                         if (err) {
                             res.render('error', {
