@@ -291,7 +291,9 @@ exports.getUsersNearby = function(req, res) {
         });
 };
 
-
+/**
+ * Get distance (meters) between two geoCoords.
+ */
 function geoMeasurement(lat1, lon1, lat2, lon2){
     var R = 6378.137; // Radius of earth in KM
     var dLat = (lat2 - lat1) * Math.PI / 180;
