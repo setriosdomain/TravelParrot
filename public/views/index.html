@@ -27,10 +27,10 @@
 
                 <div class="center-align">
 
-                    <div data-ng-show="global.user.name"><h4>{{global.user.name}}</h4></div>
+                    <a ng-href="#!/users/{{global.user._id}}"><div data-ng-show="global.user.name"><h4>{{global.user.name}}</h4></div></a>
                     <div class="row">&nbsp</div>
-                    <img ng-show="global.user.picture != ''" width="158" height="75" ng-src="/uploads/{{global.user.picture}}">
-                    <img ng-show="!global.user.picture" width="158" height="75" src="img/user_placeholder.png">
+                    <a ng-href="#!/users/{{global.user._id}}"><img ng-show="global.user.picture != ''" width="158" height="75" ng-src="/uploads/{{global.user.picture}}"></a>
+                    <a ng-href="#!/users/{{global.user._id}}"><img ng-show="!global.user.picture" width="158" height="75" src="img/user_placeholder.png"></a>
                     <div class="row">&nbsp</div>
                     <div data-ng-show="global.user.email">{{global.user.email}}</div>
                     <form class="form-search" data-ng-submit="findUsersNearby()">
