@@ -3,15 +3,15 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
 
     $scope.menu = [
     {
-        "title": "Articles",
+        "title": "Posts",
         "link": "articles",
         "submenu":     [
             {
-                "title": "List Articles",
+                "title": "List Posts",
                 "link": "articles"
             },
             {
-            "title": "Create New Article",
+            "title": "Create New Post",
             "link": "articles/create"
             }
             ]

@@ -2,7 +2,7 @@
 	<span>{{article.created | date:'medium'}}</span> /
 	<span>{{article.user.name}}</span>
 	<h2>{{article.title}}</h2>
-    <pre data-ng-show="global.user._id == article.user._id">Are you sure you want tp delete this article?</pre>
+    <pre data-ng-show="global.user._id == article.user._id">Are you sure you want tp delete this post?</pre>
     <button data-ng-show="global.user._id == article.user._id" ng-click="remove()" class="btn btn-primary">Yes</button>
     <button data-ng-show="global.user._id == article.user._id" ng-click="articlesHome()" class="btn btn-primary">No</button>
     <div class="row">&nbsp;</div>

@@ -14,7 +14,9 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
                 }
             }
             SignoutService.signout().success(function (data, status, headers, config) {
-                //TODO: check not redirecting maybe it cause an jaxa request?
+                window.user = null;
+                Global.user = null;
+                Global.authenticated = null;
                 $location.path('/');//fix and remove this.
             });
 
