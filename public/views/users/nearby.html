@@ -11,7 +11,7 @@
                         <h4><a data-ng-href="#!/users/{{user._id}}">{{user.name}}</a></h4>
                         <a data-ng-href="#!/users/{{user._id}}"><img ng-show="showImage(user.picture)" width="158" height="75" ng-src="/uploads/{{user.picture}}"></a>
                             <a data-ng-href="#!/users/{{user._id}}"><img ng-hide="showImage(user.picture)" width="158" height="75" src="/img/user_placeholder.png"></a>
-                        <h4>Was : {{user.currentLocation.distanceToOtherUser | number: 2}} Km from you on {{user.currentLocation.date |  date:'medium'}}</h4>
+                        <h4>Was : {{user.currentLocation.distanceToOtherUser | number: 4}} Km from you on {{user.currentLocation.date |  date:'medium'}}</h4>
                     </div>
             </div>
 		</li>
