@@ -1,0 +1,40 @@
+<section data-ng-init="findOne()">
+    <h3>Messages with {{message.with}}</h3>
+    <div ng-show="message.comments && message.comments.length">
+
+        <ul class="unstyled">
+
+            <li ng-repeat="comment in message.comments">
+
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td rowspan="2" width="80"> <a ng-href="/#!/users/{{comment.user}}"><img width="60" height="30" ng-src="{{comment.file_url}}"></a></td>
+                        <td><h5> {{comment.uname}}  </h5></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"> {{comment.body}} </td>
+                    </tr>
+                    <tr height="10"><td colspan="2"></td></tr>
+                    <tr height="1" bgcolor="#e4e4e4"><td colspan="2"></td></tr>
+                    <tr height="10"><td colspan="2"></td></tr>
+                </table>
+
+
+
+
+
+
+            </li>
+        </ul>
+    </div>
+    <!--add comments-->
+    <div class="row">&nbsp</div>
+    <form class="form-horizontal">
+
+
+
+        <textarea ng-model="formCommentText" class="field span9" cols="10" rows="3" placeholder="Type your message..." ng-model-instant></textarea><br><br>
+        <button class="btn" ng-click="addComment()">Send</button>
+    </form>
+</section>

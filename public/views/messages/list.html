@@ -1,0 +1,41 @@
+<section data-ng-init="find()">
+    <div class="page-header">
+        <h2>Messages</h2>
+    </div>
+    <ul class="articles unstyled">
+        <li data-ng-repeat="message in messages | slice: (confPagination.currentPage * confPagination.pageSize - confPagination.pageSize) : confPagination.currentPage * confPagination.pageSize">
+            <br>
+            <a ng-href="/#!/messages/{{message._id}}">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td rowspan="2" width="70"> <img width="60" height="30" ng-src="{{message.file_url}}"></td>
+                    <td><h5> {{message.with}}  </h5></td>
+                </tr>
+                <tr>
+                    <td colspan="2"> {{message.comments[message.comments.length-1].body}} </td>
+                </tr>
+                <tr height="5"><td colspan="2"></td></tr>
+                <tr>
+                    <td colspan="2"> {{message.comments[message.comments.length-1].date| date:'medium'}} </td>
+                </tr>
+
+            </table>
+                </a>
+            <br>
+
+
+
+        </li>
+    </ul>
+    <h1 data-ng-hide="!messages || messages.length">No messages yet. <br> Why don't you <a href="/#!/messages/create">Create One</a>?</h1>
+    <div data-ng-show="!messages || messages.length > 10" class="well well-small">
+        <pagination total-items="confPagination.totalItems"
+                    page="confPagination.currentPage"
+                    max-size="confPagination.maxSize"
+                    class="pagination"
+                    boundary-links= confPagination.boundaryLinks>
+        </pagination>
+    </div>
+
+
+</section>

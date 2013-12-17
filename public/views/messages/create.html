@@ -1,0 +1,30 @@
+<section data-ng-init="getUsers()">
+    <form class="form-horizontal" data-ng-submit="create()">
+        <div class="control-group">
+            <label class="control-label" for="user2">To user</label>
+            <div class="controls">
+                <input type="text"  data-ng-model="user2" id="user2" list="comicstitle"  placeholder="User to..." class="field span9" required>
+                <datalist id="comicstitle">
+                    <option data-xyz="{{ttl._id}}"  data-ng-repeat="ttl in list_users" value="{{ttl.name}}">
+                </datalist>
+
+            </div>
+
+            <br>
+
+
+
+                <label class="control-label">Message</label>
+            <div class="controls">
+                <textarea ng-model="formCommentText" cols="10" rows="3" class="field span9" placeholder="Type your message..." ng-model-instant required></textarea><br><br>
+                <button name="submit" type="submit" class="btn btn-primary">Send</button>
+
+            </div>
+
+
+
+
+        </div>
+
+    </form>
+</section>

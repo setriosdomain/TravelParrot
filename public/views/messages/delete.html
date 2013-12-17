@@ -1,0 +1,10 @@
+<section  data-ng-init="findOne()">
+    <span>{{message.created | date:'medium'}}</span> /
+    <span>{{message.user.name}}</span>
+    <h2>{{message.title}}</h2>
+    <pre data-ng-show="global.user._id == message.user._id">Are you sure you want tp delete this message?</pre>
+    <button data-ng-show="global.user._id == message.user._id" ng-click="remove()" class="btn btn-primary">Yes</button>
+    <button data-ng-show="global.user._id == message.user._id" ng-click="messagesHome()" class="btn btn-primary">No</button>
+    <div class="row">&nbsp;</div>
+    <div>{{message.content}}</div>
+</section>

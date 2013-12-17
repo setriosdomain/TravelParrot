@@ -2,34 +2,48 @@ angular.module('mean.system').controller('HeaderController', ['$scope', 'Global'
     $scope.global = Global;
 
     $scope.menu = [
-    {
-        "title": "Posts",
-        "link": "articles",
-        "submenu":     [
-            {
-                "title": "List Posts",
-                "link": "articles"
-            },
-            {
-            "title": "Create New Post",
-            "link": "articles/create"
-            }
+        {
+            "title": "Posts",
+            "link": "articles",
+            "submenu":     [
+                {
+                    "title": "List Posts",
+                    "link": "articles"
+                },
+                {
+                "title": "Create New Post",
+                "link": "articles/create"
+                }
+                ]
+        },
+        {
+            "title": "Events",
+            "link": "events",
+            "submenu": [
+                {
+                    "title": "List Events",
+                    "link": "events"
+                },
+                {
+                "title": "Create New Event",
+                "link": "events/create"
+               }
+                ]
+        },
+        {
+            "title": "Messages",
+            "link": "messages",
+            "submenu": [
+                {
+                    "title": "List of Messages",
+                    "link": "messages"
+                },
+                {
+                    "title": "Create New Message",
+                    "link": "messages/create"
+                }
             ]
-    },
-    {
-        "title": "Events",
-        "link": "events",
-        "submenu": [
-            {
-                "title": "List Events",
-                "link": "events"
-            },
-            {
-            "title": "Create New Event",
-            "link": "events/create"
-           }
-            ]
-    }
+        }
     ];
     
     $scope.isCollapsed = false;

@@ -306,5 +306,17 @@ function geoMeasurement(lat1, lon1, lat2, lon2){
     return d * 1000; // meters
 };
 
-
-
+/**
+ * getAllUsers for msg.
+ */
+exports.getAllUsers = function(req, res) {
+    User.find().where('_id').ne(req.user._id).sort('-username').exec(function(err, users) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
+        } else {
+            res.jsonp(users);
+        }
+    });
+};

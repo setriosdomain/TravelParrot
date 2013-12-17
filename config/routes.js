@@ -22,6 +22,7 @@ module.exports = function(app, passport, auth) {
 
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
+    app.post('/getAllUsers', users.getAllUsers);
 
     //$ ajax calls
     app.post('/enc',auth.requiresLogin, users.getEncPassword);
@@ -114,7 +115,18 @@ module.exports = function(app, passport, auth) {
     app.get('/getRecentEvents', index.getRecentEvents);
     app.get('/getRecentArticles', index.getRecentArticles);
 
+    //Message Routes
+    var messages = require('../app/controllers/messages');
+    app.get('/messages', messages.all);
+    app.post('/messages', auth.requiresLogin, messages.create);
+    app.get('/messages/:messageId', messages.show);
+    app.put('/messages/:messageId', auth.requiresLogin, auth.message.hasAuthorization, messages.update);
+    app.del('/messages/:messageId', auth.requiresLogin, auth.message.hasAuthorization, messages.destroy);
+    app.post('/queryMessages', auth.requiresLogin, messages.queryMessages);
+    app.post('/addMessageComment', auth.requiresLogin, messages.addComment);
 
+    //Finish with setting up the articleId param
+    app.param('messageId', messages.message);
 
 
 };

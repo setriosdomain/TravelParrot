@@ -85,6 +85,31 @@ window.app.config(['$routeProvider',
         when('/faq/', {
                 templateUrl: 'views/faq.html'
         }).
+            //messages
+            when('/messages/:name/find', {
+                templateUrl: 'views/messages/list.html',
+                controller: 'MessagesController'
+            }).
+            when('/messages', {
+                templateUrl: 'views/messages/list.html',
+                controller: 'MessagesController'
+            }).
+            when('/messages/create', {
+                templateUrl: 'views/messages/create.html',
+                controller: 'MessagesController'
+            }).
+            when('/messages/:messageId/edit', {
+                templateUrl: 'views/messages/edit.html',
+                controller: 'MessagesController'
+            }).
+            when('/messages/:messageId/delete', {
+                templateUrl: 'views/messages/delete.html',
+                controller: 'MessagesController'
+            }).
+            when('/messages/:messageId', {
+                templateUrl: 'views/messages/view.html',
+                controller: 'MessagesController'
+            }).
         //home
         when('/', {templateUrl: 'views/index.html',
                    controller: 'IndexController'
