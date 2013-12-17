@@ -241,7 +241,7 @@ exports.queryUsers = function(req, res) {
 exports.getUsersNearby = function(req, res) {
     if(!req.body.userId){return;}
     if(!req.body.maxDistance){
-        req.body.maxDistance = 1000;//meters
+        req.body.maxDistance = 100000;//distance in meters. 100 Km
     }
 
 
@@ -277,14 +277,14 @@ exports.getUsersNearby = function(req, res) {
                         var distanceToUser =geoMeasurement(fromLatitude,fromLongitude,
                                             toLatitude,toLongitude);
                         if(distanceToUser < req.body.maxDistance){
-                            users[i].currentLocation.distanceToOtherUser = distanceToUser;
+                            users[i].currentLocation.distanceToOtherUser = distanceToUser * 0.001;
                             nearbyUsers.push(users[i]);
                         }
 
                     }
                     //order by distance
                     res.jsonp(_.sortBy(nearbyUsers, function(usr){
-                        return usr.currentLocation.distanceToOtherUser
+                        return usr.currentLocation.distanceToOtherUser;
                     }));
                 }
             });

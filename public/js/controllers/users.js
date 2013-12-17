@@ -185,7 +185,7 @@ angular.module('mean.users').controller('UsersController', ['$scope', '$upload',
             url: '/getUsersNearby/',
             data: {
                 userId: $routeParams.userId,
-                maxDistance: 1000
+                maxDistance: 100000
             },
             dataType: 'json',
             success: function(users) {
