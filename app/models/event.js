@@ -46,7 +46,13 @@ var EventSchema = new Schema({
                         ref: 'User'
                  },
                  file_url: String
-    }]
+    }],
+    participants: [{user:{
+                           type: Schema.ObjectId,
+                           ref: 'User'
+                    },
+                    file_url: String
+                   }]
 });
 
 /**

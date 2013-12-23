@@ -140,3 +140,24 @@ exports.queryEvents = function(req, res) {
             }
         });
 };
+/**
+ * Add a participant to an event.
+ */
+exports.addParticipant = function(req, res) {
+    if(!req.body.eventId || !req.body.participant){return;}
+
+
+    Event.load(req.body.eventId, function(err, orgEvent) {
+        if (err) return next(err);
+        if (!orgEvent) return next(new Error('Failed to load event ' + req.body.eventId));
+        if(!orgEvent.participants){
+            orgEvent.participants = [];
+        }
+        orgEvent.participants.push(req.body.participant);
+
+        orgEvent.save(function(err) {
+            res.jsonp(orgEvent);
+        });
+
+    });
+};

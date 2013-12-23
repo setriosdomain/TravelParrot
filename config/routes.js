@@ -99,6 +99,8 @@ module.exports = function(app, passport, auth) {
     app.del('/events/:eventId', auth.requiresLogin, auth.event.hasAuthorization, events.destroy);
     app.post('/queryEvents', auth.requiresLogin, events.queryEvents);
     app.post('/addEventComment', auth.requiresLogin, events.addComment);
+    app.post('/addParticipant', auth.requiresLogin, events.addParticipant);
+
     //Finish with setting up the articleId param
     app.param('eventId', events.event);
     app.get('/uploads/', function(){});//ignore request

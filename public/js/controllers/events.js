@@ -49,13 +49,21 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         event.periodFrom = $scope.DatePicker.dateFrom;
         event.periodTo = $scope.DatePicker.dateTo;
         event.destinations = $scope.GoogleMaps.getFormaterMarkers();
+        //comments
         event.comments.length = 0;
         for(var index =0; index < $scope.editModeComments.length; index++){
             if($scope.editModeComments[index]){
                 event.comments.push($scope.editModeComments[index]);
             }
         }
-
+        //participants
+        event.participants.length = 0;
+        for(var index =0; index < $scope.editModeParticipants.length; index++){
+            if($scope.editModeParticipants[index]){
+                event.participants.push($scope.editModeParticipants[index]);
+            }
+        }
+        //update
         event.$update(function() {
             $location.path('events/' + event._id);
         });
@@ -479,6 +487,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
         $scope.DatePicker.initializeDatesFromEvent();
         $scope.file_url = $scope.event.file_url;
         $scope.loadComments();
+        $scope.loadParticipants();
     }
     //comments
     $scope.loadComments = function(){
@@ -495,18 +504,18 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
 
 
     };
-    $scope.fillPicture = function(comment){
-        if(!comment || !comment.user/*userId*/){return;}
+    $scope.fillPicture = function(commentOrParticipant){
+        if(!commentOrParticipant || !commentOrParticipant.user/*userId*/){return;}
         Users.get({
-            userId: comment.user
+            userId: commentOrParticipant.user
         }, function(user) {
             if(!user){return;}
             Global.safeApply($scope, function(){
                 if(!user.picture || user.picture ==''){
-                    comment.file_url = "img/user_placeholder.png";
+                    commentOrParticipant.file_url = "img/user_placeholder.png";
                 }
                 else{
-                    comment.file_url = "/uploads/"+user.picture;
+                    commentOrParticipant.file_url = "/uploads/"+user.picture;
                 }
             });
         });
@@ -550,6 +559,66 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$upload
     $scope.removeComment = function(index){
         delete $scope.editModeComments[index];
     };
+    $scope.removeParticipant = function(index){
+        delete $scope.editModeParticipants[index];
+    };
     //comments
+    //participants
+    $scope.addParticipant = function(){
+        if(!$scope.event){return;}
+        if(!$scope.event.participants){
+            $scope.event.participants = [];
+        }
+        //check if user already exists
+        if($scope.event.participants.map(function(e) {
+            return e.user; }).indexOf(Global.user._id) >= 0){
+            return;
+        }
+
+
+        var pictureFile = '';
+        if(!Global.user.picture || Global.user.picture ==''){
+            pictureFile = "img/user_placeholder.png";
+        }
+        else{
+            pictureFile = "/uploads/"+Global.user.picture;
+        }
+
+        var newParticipant = {
+            user: Global.user._id,
+            file_url: pictureFile
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/addParticipant',
+            data: {
+                eventId: $scope.event._id,
+                participant: newParticipant
+            },
+            dataType: 'json',
+            success: function(data) {
+                Global.safeApply($scope, function(){
+                    $scope.event.participants.push(newParticipant);//for view purpose only
+                });
+            }
+        });
+    };
+    $scope.loadParticipants = function(){
+
+        if(!$scope.event.participants){
+            $scope.event.participants = [];
+        }
+        for(var i in $scope.event.participants){
+            $scope.fillPicture($scope.event.participants[i]);
+        }
+        if(!$('#map_canvas_edit')[0]/*dom elem*/){return;}
+        //we are on edit mode
+        $scope.editModeParticipants = $scope.event.participants.slice();//shallow copy
+
+
+    };
+    //participants
+
 
 }]);
